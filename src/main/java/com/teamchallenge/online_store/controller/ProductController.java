@@ -26,6 +26,7 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to add product: " + e.getMessage());
         }
+
     }
     @GetMapping("/api/products/{id}")
     public Product getProductById(@PathVariable Long id) {
