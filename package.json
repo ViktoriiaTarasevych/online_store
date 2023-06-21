@@ -1,0 +1,13 @@
+{
+  "name": "online_store",
+  "version": "1.0.0",
+  "description": "My project",
+  "main": "OnlineStoreApplication.java",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "json": "^9.0.0"
+  }
+}
