@@ -2,7 +2,7 @@
   "name": "online_store",
   "version": "1.0.0",
   "description": "My project",
-  "main": "OnlineStoreApplication.java",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "jest"
