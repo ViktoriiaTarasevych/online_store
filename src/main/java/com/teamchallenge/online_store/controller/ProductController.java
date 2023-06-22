@@ -15,7 +15,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/api/products")
+    @PostMapping("https://onlinestore-challenge.onrender.com/api/products")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
             // Виклик сервісного шару для додавання товару
@@ -28,7 +28,7 @@ public class ProductController {
         }
 
     }
-    @GetMapping("/api/products/{id}")
+    @GetMapping("https://onlinestore-challenge.onrender.com/api/products/{id}")
     public Product getProductById(@PathVariable Long id) {
         // Логіка для отримання товару з бази даних або іншого джерела
         Product product = productService.getProductById(id);
