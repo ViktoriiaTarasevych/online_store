@@ -17,5 +17,5 @@ RUN ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn
 FROM eclipse-temurin:17-jdk
 EXPOSE 8080
 VOLUME /tmp
-COPY /app/online_store-0.0.1-SNAPSHOT.jar app.jar
+COPY online_store-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
