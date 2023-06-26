@@ -15,6 +15,13 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @GetMapping("/")
+    public String hello (String hello) {
+
+        return "Hello";
+    }
+
+
     @PostMapping("/products")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
