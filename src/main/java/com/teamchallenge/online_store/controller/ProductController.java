@@ -18,7 +18,7 @@ public class ProductController {
     @GetMapping("/")
     public String hello (String hello) {
 
-        return "Hello";
+        return "Привіт";
     }
 
 
@@ -27,11 +27,11 @@ public class ProductController {
         try {
             // Виклик сервісного шару для додавання товару
             productService.addProduct(product);
-            return ResponseEntity.ok("Product added successfully");
+            return ResponseEntity.ok("Продукт успішно додано");
         } catch (Exception e) {
             // Обробка помилок, якщо виникла проблема з додаванням товару
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to add product: " + e.getMessage());
+                    .body("Не вдалося додати продукт: " + e.getMessage());
         }
 
     }
