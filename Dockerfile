@@ -13,7 +13,7 @@ RUN mvn -f /app/pom.xml clean package -DskipTests
 FROM openjdk:17-jdk-slim
 
 EXPOSE 8080
-COPY /online_store-0.0.1-SNAPSHOT.jar app.jar
+COPY target/online_store-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java","-jar","/app.jar"]
 
