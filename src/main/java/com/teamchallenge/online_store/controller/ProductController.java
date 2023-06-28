@@ -18,7 +18,7 @@ public class ProductController {
     @GetMapping("/")
     public String hello (String hello) {
 
-        return "Hello Denchik";
+        return "Hello";
     }
 
 
