@@ -15,14 +15,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("https://onlinestore-challenge.onrender.com/")
+    @GetMapping("/")
     public String hello (String hello) {
 
-        return "Hello";
+        return "Hello Denchik";
     }
 
 
-    @PostMapping("https://onlinestore-challenge.onrender.com/products")
+    @PostMapping("/products")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
             // Виклик сервісного шару для додавання товару
@@ -35,7 +35,7 @@ public class ProductController {
         }
 
     }
-    @GetMapping("https://onlinestore-challenge.onrender.com/products/{id}")
+    @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable Long id) {
         // Логіка для отримання товару з бази даних або іншого джерела
         Product product = productService.getProductById(id);
