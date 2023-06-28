@@ -17,8 +17,7 @@ COPY /online_store-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java","-jar","/app.jar"]
 
-FROM mysql:latest
-ENV MYSQL_ROOT_PASSWORD=root
+
 
 
 

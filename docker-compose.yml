@@ -2,17 +2,20 @@ version: '3.1'
 
 services:
 
-  mysql:
-    image: 'mysql:latest'
+  postgres:
+    image: 'postgres:latest'
 
     restart: always
     container_name: containerstore
 
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: online_store
+      POSTGRES_DB: online_store_fpt1
+      POSTGRES_PASSWORD: post
+      POSTGRES_USER: postgres
+
+
     ports:
-      - '5000:3306'
+      - '5432:5432'
     networks:
       - networkstore
 
@@ -22,9 +25,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '8080:8090'
+      - '8080:8080'
     depends_on:
-      - mysql
+      - postgres
     networks:
       - networkstore
 
