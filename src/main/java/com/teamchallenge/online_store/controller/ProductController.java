@@ -15,6 +15,7 @@ import java.util.List;
 
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
 @RestController
+@RequestMapping("/api/products")
 @Api(tags = "Product")
 public class ProductController {
 
@@ -24,14 +25,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/api/")
-    public String hello (String hello) {
+//    @GetMapping("/")
+//    public String hello (String hello) {
+//
+//        return "Привіт";
+//    }
 
-        return "Привіт";
-    }
 
-
-    @PostMapping("/api/products")
+    @PostMapping("/")
     @ApiOperation("Add product")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
@@ -45,7 +46,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/api/products/{id}")
+    @GetMapping("/{id}")
     @ApiOperation("Get product by id")
     public Product getProductById(@PathVariable Long id) {
         // Логіка для отримання товару з бази даних
@@ -53,7 +54,7 @@ public class ProductController {
         return product;
     }
 
-    @GetMapping("/api/products")
+    @GetMapping("/")
     @ApiOperation("Get all products")
     public PageModel<Product> getAllProducts ( @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size ) {
