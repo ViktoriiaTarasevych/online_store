@@ -13,7 +13,7 @@ public class SpringdocConfig {
 
     @Bean
     public OpenAPI openAPI () {
-        return new OpenAPI().info(new Info().title("API doc").version("1.0").description("API doc online store"));
+        return new OpenAPI().info(new Info().title("Online store").version("1.0").description("API doc"));
     }
 }
 

@@ -25,12 +25,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-//    @GetMapping("/")
-//    public String hello (String hello) {
-//
-//        return "Привіт";
-//    }
-
 
     @PostMapping("/")
     @Operation(summary = "Add product")
