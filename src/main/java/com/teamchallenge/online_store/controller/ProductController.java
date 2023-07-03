@@ -3,8 +3,9 @@ package com.teamchallenge.online_store.controller;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.servise.ProductService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
 @RestController
 @RequestMapping("/api/products")
-@Api(tags = "Product")
+@Tag(name = "Product")
 public class ProductController {
 
     private final ProductService productService;
@@ -33,7 +34,7 @@ public class ProductController {
 
 
     @PostMapping("/")
-    @ApiOperation("Add product")
+    @Operation(summary = "Add product")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
             // Виклик сервісного шару для додавання товару
@@ -47,7 +48,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation("Get product by id")
+    @Operation(summary = "Get product by id")
     public Product getProductById(@PathVariable Long id) {
         // Логіка для отримання товару з бази даних
         Product product = productService.getProductById(id);
@@ -55,7 +56,7 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    @ApiOperation("Get all products")
+    @Operation(summary = "Get all products")
     public PageModel<Product> getAllProducts ( @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size ) {
         Pageable pageable = PageRequest.of(page, size);
