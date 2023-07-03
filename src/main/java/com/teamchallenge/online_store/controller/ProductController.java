@@ -3,7 +3,6 @@ package com.teamchallenge.online_store.controller;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.servise.ProductService;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.PageRequest;
