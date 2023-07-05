@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/categories")
 @Tag(name = "Category")
 public class CategoryController {
 
@@ -41,7 +41,7 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
-    @GetMapping("/products")
+    @GetMapping("/{categoryId}/products")
     @Operation(summary = "Get all products in category")
     public List<Product> getProductsByCategoryId (@PathVariable Long categoryId) {
         return categoryService.getProductsByCategoryId(categoryId);
