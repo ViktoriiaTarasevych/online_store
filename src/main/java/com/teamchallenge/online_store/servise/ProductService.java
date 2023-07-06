@@ -47,8 +47,8 @@ public class ProductService {
 
         // Оновлення властивостей товару
         existingProduct.setName(updatedProduct.getName());
-        // Додаткові оновлення властивостей товару, якщо необхідно
-
+        existingProduct.setCategoryId(updatedProduct.getCategoryId());
+        existingProduct.setCategoryName(updatedProduct.getCategoryName());
         // Збереження оновленого товару
         productRepository.save(existingProduct);
     }

@@ -57,6 +57,22 @@ public class ProductController {
         return productService.getAllProducts(pageable);
     }
 
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update product by id")
+    public ResponseEntity<String> updateProductById(@PathVariable Long id, @RequestBody Product updateProduct) {
+        try {
+            productService.updateProduct(id, updateProduct);
+            return ResponseEntity.ok("Продукт оновлено");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Не вдалося оновити продукт: " + e.getMessage());
+        }
+    }
+
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete product by id")
     public ResponseEntity<String> deleteProductById(@PathVariable Long id) {
