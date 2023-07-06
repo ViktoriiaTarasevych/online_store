@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
 @RestController
@@ -50,24 +51,26 @@ public class ProductController {
 
     @GetMapping("/")
     @Operation(summary = "Get all products")
-    public PageModel<Product> getAllProducts ( @RequestParam(defaultValue = "0") int page,
-                                               @RequestParam(defaultValue = "10") int size ) {
+    public PageModel<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return productService.getAllProducts(pageable);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete product by id")
-    public ResponseEntity<String> deleteProductById (@PathVariable Long id) {
+    public ResponseEntity<String> deleteProductById(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
             return ResponseEntity.ok("Продукт успішно видалено");
-        } catch (Exception e ) {
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Продукт не знайдено");
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Не вдалося видалити продукт: " + e.getMessage());
         }
     }
-
 
 
 }
