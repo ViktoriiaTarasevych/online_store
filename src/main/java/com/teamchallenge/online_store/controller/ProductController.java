@@ -46,7 +46,7 @@ public class ProductController {
         // Логіка для отримання товару з бази даних
         Product product = productService.getProductById(id);
         return product;
-    }
+    } /// не виводяться імя продукту та категорії id та імя
 
     @GetMapping("/")
     @Operation(summary = "Get all products")
@@ -55,4 +55,19 @@ public class ProductController {
         Pageable pageable = PageRequest.of(page, size);
         return productService.getAllProducts(pageable);
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete product by id")
+    public ResponseEntity<String> deleteProductById (@PathVariable Long id) {
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.ok("Продукт успішно видалено");
+        } catch (Exception e ) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Не вдалося видалити продукт: " + e.getMessage());
+        }
+    }
+
+
+
 }

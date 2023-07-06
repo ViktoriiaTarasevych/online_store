@@ -33,7 +33,7 @@ public class ProductService {
         pageModel.setTotalElement(page.getTotalElements());
 
         return pageModel;
-    }
+    }   /// не пишеться імя продукту та категорії
 
     public Product getProductById(Long id) {
         // Пошук товару за ідентифікатором

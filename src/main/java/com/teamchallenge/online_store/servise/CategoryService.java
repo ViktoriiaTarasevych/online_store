@@ -26,7 +26,7 @@ public class CategoryService {
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
-    }
+    }   /// імя null пише
 
 
     public List<Product> getProductsByCategoryId(Long categoryId) {

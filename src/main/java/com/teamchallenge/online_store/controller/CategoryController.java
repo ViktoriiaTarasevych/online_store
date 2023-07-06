@@ -39,7 +39,7 @@ public class CategoryController {
     @Operation(summary = "Get all categories")
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
-    }
+    }  /// перевірити роботу цього методу
 
     @GetMapping("/{categoryId}/products")
     @Operation(summary = "Get all products in category")
