@@ -15,11 +15,6 @@ public class Product {
     @Column(name = "category_name")
     private String categoryName;
 
-    @ManyToOne(fetch = FetchType.LAZY) // відношення з категорією
-    @JoinColumn(name = "category_id") // звязок між продуктом та категорією
-    private Category category;
-
-
     public Long getId() {
         return id;
     }
@@ -51,14 +46,6 @@ public class Product {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public Product() {
