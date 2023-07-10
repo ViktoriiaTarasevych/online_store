@@ -1,9 +1,6 @@
 package com.teamchallenge.online_store.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Product {
@@ -13,9 +10,15 @@ public class Product {
 
     private String name;
 
+    @Column(name = "category_id", insertable = false, updatable = false)
     private Long categoryId;
-
+    @Column(name = "category_name")
     private String categoryName;
+
+    @ManyToOne(fetch = FetchType.LAZY) // відношення з категорією
+    @JoinColumn(name = "category_id") // звязок між продуктом та категорією
+    private Category category;
+
 
     public Long getId() {
         return id;
@@ -48,6 +51,14 @@ public class Product {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Product() {

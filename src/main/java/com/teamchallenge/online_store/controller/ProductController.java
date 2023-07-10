@@ -1,7 +1,9 @@
 package com.teamchallenge.online_store.controller;
 
+import com.teamchallenge.online_store.model.Category;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
+import com.teamchallenge.online_store.servise.CategoryService;
 import com.teamchallenge.online_store.servise.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.NoSuchElementException;
 
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
@@ -22,8 +22,11 @@ public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    private final CategoryService categoryService;
+
+    public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
 
@@ -31,9 +34,17 @@ public class ProductController {
     @Operation(summary = "Add product")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
+            // Отримати категорію за її ідентифікатором
+            Category category = categoryService.getCategoryById(product.getCategoryId());
+
+            // Встановити назву категорії в об'єкті продукту
+            product.setCategoryName(category.getName());
+
             // Виклик сервісного шару для додавання товару
             productService.addProduct(product);
             return ResponseEntity.ok("Продукт успішно додано");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             // Обробка помилок, якщо виникла проблема з додаванням товару
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -62,6 +73,12 @@ public class ProductController {
     @Operation(summary = "Update product by id")
     public ResponseEntity<String> updateProductById(@PathVariable Long id, @RequestBody Product updateProduct) {
         try {
+            // Отримати категорію за ідентифікатором
+            Category category = categoryService.getCategoryById(updateProduct.getCategoryId());
+
+            // Встановити назву категорії в об'єкті продукту
+            updateProduct.setCategoryName(category.getName());
+
             productService.updateProduct(id, updateProduct);
             return ResponseEntity.ok("Продукт оновлено");
         } catch (NoSuchElementException e) {
@@ -87,6 +104,4 @@ public class ProductController {
                     .body("Не вдалося видалити продукт: " + e.getMessage());
         }
     }
-
-
 }

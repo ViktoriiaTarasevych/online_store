@@ -28,14 +28,29 @@ public class CategoryService {
         return categoryRepository.findAll();
     }   /// імя null пише
 
+    public Category getCategoryById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Категорію не знайдена"));
+    }
+
+    public void updateCategory(Long id, Category updatedCategory) {
+        Category existingCategory = getCategoryById(id);
+        existingCategory.setName(updatedCategory.getName());
+        categoryRepository.save(existingCategory);
+    }
+
 
     public List<Product> getProductsByCategoryId(Long categoryId) {
         // Отримати категорію за ідентифікатором
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NoSuchElementException("Категорія не знайдена"));
+                .orElseThrow(() -> new NoSuchElementException("Категорію не знайдена"));
 
         // Отримати всі продукти за ідентифікатором категорії
         return productService.getProductsByCategoryId(categoryId);
     }
 
+    public void deleteCategory(Long id) {
+        Category category = getCategoryById(id);
+        categoryRepository.delete(category);
+    }
 }

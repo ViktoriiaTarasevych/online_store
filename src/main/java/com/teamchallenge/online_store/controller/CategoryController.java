@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -35,6 +36,43 @@ public class CategoryController {
         }
     }
 
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get category by id")
+    public Category getCategoryById(@PathVariable Long id) {
+        Category category = categoryService.getCategoryById(id);
+        return category;
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update category by id")
+    public ResponseEntity<String> updateCategoryById(@PathVariable Long id, @RequestBody Category updatedCategory) {
+        try {
+            categoryService.updateCategory(id, updatedCategory);
+            return ResponseEntity.ok("Категорію оновлено");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Не вдалося оновити категорію: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete category by id")
+    public ResponseEntity<String> deleteCategoryById(@PathVariable Long id) {
+        try {
+            categoryService.deleteCategory(id);
+            return ResponseEntity.ok("Категорію видалено");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Категорію не знайдено");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Не вдалося видалити категорію: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/")
     @Operation(summary = "Get all categories")
     public List<Category> getAllCategories() {
@@ -43,7 +81,7 @@ public class CategoryController {
 
     @GetMapping("/{categoryId}/products")
     @Operation(summary = "Get all products in category")
-    public List<Product> getProductsByCategoryId (@PathVariable Long categoryId) {
+    public List<Product> getProductsByCategoryId(@PathVariable Long categoryId) {
         return categoryService.getProductsByCategoryId(categoryId);
     }
 }
