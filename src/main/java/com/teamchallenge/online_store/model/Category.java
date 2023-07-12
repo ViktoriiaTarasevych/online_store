@@ -2,6 +2,8 @@ package com.teamchallenge.online_store.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Category {
 
@@ -11,6 +13,9 @@ public class Category {
 
     private String name;
 
+
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products;
 
     public Long getId() {
         return id;
@@ -28,7 +33,23 @@ public class Category {
         this.name = name;
     }
 
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
     public Category() {
+    }
+
+
+    public Category(Long id, String name, Set<Product> products) {
+        this.id = id;
+        this.name = name;
+        this.products = products;
     }
 
     public Category(Long id, String name) {
