@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -40,8 +41,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     @Operation(summary = "Get category by id")
     public Category getCategoryById(@PathVariable Long id) {
-        Category category = categoryService.getCategoryById(id);
-        return category;
+        return categoryService.getCategoryById(id);
     }
 
     @PutMapping("/{id}")
@@ -81,7 +81,7 @@ public class CategoryController {
 
     @GetMapping("/{categoryId}/products")
     @Operation(summary = "Get all products in category")
-    public List<Product> getProductsByCategoryId(@PathVariable Long categoryId) {
+    public Set<Product> getProductsByCategoryId(@PathVariable Long categoryId) {
         return categoryService.getProductsByCategoryId(categoryId);
     }
 }

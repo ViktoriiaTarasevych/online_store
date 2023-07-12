@@ -1,5 +1,6 @@
 package com.teamchallenge.online_store.servise;
 
+import com.teamchallenge.online_store.model.Category;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.repository.ProductRepository;
@@ -19,7 +20,6 @@ public class ProductService {
     }
 
     public void addProduct(Product product) {
-        // Логіка для додавання товару
         productRepository.save(product);
     }
 
@@ -36,28 +36,19 @@ public class ProductService {
     }   /// не пишеться імя продукту та категорії
 
     public Product getProductById(Long id) {
-        // Пошук товару за ідентифікатором
         return productRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Product not found"));
+                .orElseThrow(() -> new NoSuchElementException("Продукт не знайдено"));
     }
 
     public void updateProduct(Long id, Product updatedProduct) {
-        // Пошук товару за ідентифікатором
         Product existingProduct = getProductById(id);
-
-        // Оновлення властивостей товару
         existingProduct.setName(updatedProduct.getName());
-        existingProduct.setCategoryId(updatedProduct.getCategoryId());
-        existingProduct.setCategoryName(updatedProduct.getCategoryName());
-        // Збереження оновленого товару
+        existingProduct.setCategory(updatedProduct.getCategory());
         productRepository.save(existingProduct);
     }
 
     public void deleteProduct(Long id) {
-        // Пошук товару за ідентифікатором
         Product product = getProductById(id);
-
-        // Видалення товару
         productRepository.delete(product);
     }
 

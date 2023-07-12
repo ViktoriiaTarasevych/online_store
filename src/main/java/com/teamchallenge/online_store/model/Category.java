@@ -2,6 +2,8 @@ package com.teamchallenge.online_store.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,7 +16,7 @@ public class Category {
     private String name;
 
 
-    @ManyToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "category")
     private Set<Product> products;
 
     public Long getId() {
@@ -56,4 +58,13 @@ public class Category {
         this.id = id;
         this.name = name;
     }
+
+    public List<Long> getProductIds() {
+        List<Long> productIds = new ArrayList<>();
+        for (Product product : products) {
+            productIds.add(product.getId());
+        }
+        return productIds;
+    }
+
 }

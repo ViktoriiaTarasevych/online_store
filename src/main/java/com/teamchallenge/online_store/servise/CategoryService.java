@@ -7,16 +7,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class CategoryService {
-
-    private final ProductService productService;
-
     private final CategoryRepository categoryRepository;
 
-    public CategoryService(ProductService productService, CategoryRepository categoryRepository) {
-        this.productService = productService;
+    public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
@@ -40,13 +37,9 @@ public class CategoryService {
     }
 
 
-    public List<Product> getProductsByCategoryId(Long categoryId) {
-        // Отримати категорію за ідентифікатором
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new NoSuchElementException("Категорію не знайдена"));
-
-        // Отримати всі продукти за ідентифікатором категорії
-        return productService.getProductsByCategoryId(categoryId);
+    public Set<Product> getProductsByCategoryId(Long categoryId) {
+        Category category = getCategoryById(categoryId);
+        return category.getProducts();
     }
 
     public void deleteCategory(Long id) {

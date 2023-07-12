@@ -2,6 +2,7 @@ package com.teamchallenge.online_store.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +15,9 @@ public class Product {
 
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Long getId() {
         return id;
@@ -37,18 +36,18 @@ public class Product {
     }
 
 
-    public Set<Category> getCategories() {
-        return categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public Product(Long id, String name, Set<Category> categories) {
+    public Product(Long id, String name,Category category) {
         this.id = id;
         this.name = name;
-        this.categories = categories;
+        this.category = category;
     }
 
     public Product() {
