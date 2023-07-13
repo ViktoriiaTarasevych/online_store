@@ -52,7 +52,7 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    public List<Product> getProductsByCategoryId (Long categoryId) {
-        return productRepository.findAllByCategoryId(categoryId);
+    public List<Product> getProductsByCategory (Category category) {
+        return productRepository.findByCategory(category);
     }
 }
