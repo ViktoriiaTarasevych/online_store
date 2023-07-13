@@ -43,7 +43,7 @@ public class ProductService {
     public void updateProduct(Long id, Product updatedProduct) {
         Product existingProduct = getProductById(id);
         existingProduct.setName(updatedProduct.getName());
-        existingProduct.setCategory(updatedProduct.getCategory());
+    //    existingProduct.setCategory(updatedProduct.getCategory());
         productRepository.save(existingProduct);
     }
 

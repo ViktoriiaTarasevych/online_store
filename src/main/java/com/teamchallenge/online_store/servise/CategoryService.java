@@ -33,7 +33,7 @@ public class CategoryService {
     public void updateCategory(Long id, Category updatedCategory) {
         Category existingCategory = getCategoryById(id);
         existingCategory.setName(updatedCategory.getName());
-        existingCategory.setProducts(updatedCategory.getProducts());
+        //    existingCategory.setProducts(updatedCategory.getProducts());
         categoryRepository.save(existingCategory);
     }
 

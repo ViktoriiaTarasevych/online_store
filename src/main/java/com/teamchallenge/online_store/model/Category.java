@@ -1,5 +1,6 @@
 package com.teamchallenge.online_store.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Category {
 
     private String name;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products;
 
