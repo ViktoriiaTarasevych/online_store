@@ -49,7 +49,9 @@ public class ProductController {
     @GetMapping("/{id}")
     @Operation(summary = "Get product by id")
     public Product getProductById(@PathVariable Long id) {
-        return productService.getProductById(id);
+        Product product = productService.getProductById(id);
+         product.getCategory().getName();
+        return product;
     } /// не виводяться імя продукту та категорії id та імя
 
     @GetMapping("/")
