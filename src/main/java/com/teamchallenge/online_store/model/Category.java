@@ -11,12 +11,12 @@ import java.util.Set;
 public class Category {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products;
 
