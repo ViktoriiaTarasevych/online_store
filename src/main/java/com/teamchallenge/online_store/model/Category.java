@@ -16,7 +16,7 @@ public class Category {
 
     private String name;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products;
 
