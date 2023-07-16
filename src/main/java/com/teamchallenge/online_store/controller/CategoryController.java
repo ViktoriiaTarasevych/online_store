@@ -29,7 +29,6 @@ public class CategoryController {
     @Operation(summary = "Add category")
     public ResponseEntity<String> addCategory(@RequestBody Category category) {
         try {
-            category.setName(category.getName());
             categoryService.addCategory(category);
             return ResponseEntity.ok("Категорію успішно додано " + category.getName());
         } catch (Exception e) {
