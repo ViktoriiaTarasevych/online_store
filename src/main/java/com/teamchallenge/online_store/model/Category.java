@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class Category {
     }
 
     public void setProducts(Set<Product> products) {
-        this.products = products;
+        this.products = products != null ? products : new HashSet<>();
     }
 
     public Category() {
@@ -52,7 +53,7 @@ public class Category {
     public Category(Long id, String name, Set<Product> products) {
         this.id = id;
         this.name = name;
-        this.products = products;
+        this.products = products != null ? products : new HashSet<>();
     }
 
     public Category(Long id, String name) {
@@ -67,5 +68,4 @@ public class Category {
         }
         return productIds;
     }
-
 }
