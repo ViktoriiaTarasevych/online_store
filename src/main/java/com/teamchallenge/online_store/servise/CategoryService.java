@@ -19,6 +19,7 @@ public class CategoryService {
 
     public void addCategory(Category category) {
         categoryRepository.save(category);
+        System.out.println("Збережено категорію з ім'ям: " + category.getName());
     }
 
     public List<Category> getAllCategories() {

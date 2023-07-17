@@ -50,16 +50,10 @@ public class Category {
     }
 
 
-    public Category(Long id, String name, Set<Product> products) {
-        this.id = id;
+    public Category(String name) {
         this.name = name;
-        this.products = products != null ? products : new HashSet<>();
     }
 
-    public Category(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public List<Long> getProductIds() {
         List<Long> productIds = new ArrayList<>();
