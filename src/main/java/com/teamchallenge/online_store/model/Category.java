@@ -17,8 +17,10 @@ public class Category {
     private Long id;
 
     @JsonProperty
-    @Column(nullable = false)
+   // @Column(nullable = false)
     private String name;
+
+    private String test;
 
     @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
@@ -28,6 +30,13 @@ public class Category {
         return id;
     }
 
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -53,10 +62,10 @@ public class Category {
     }
 
 
-    public Category(String name) {
+    public Category(String name, String test) {
         this.name = name;
+        this.test = test;
     }
-
 
     public List<Long> getProductIds() {
         List<Long> productIds = new ArrayList<>();
