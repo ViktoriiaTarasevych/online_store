@@ -17,7 +17,7 @@ public class Category {
     private Long id;
 
     @JsonProperty
-   // @Column(nullable = false)
+    @Column(nullable = false)
     private String name;
 
     private String test;
