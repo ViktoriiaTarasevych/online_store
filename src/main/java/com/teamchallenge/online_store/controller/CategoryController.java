@@ -6,6 +6,7 @@ import com.teamchallenge.online_store.servise.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class CategoryController {
 
     @PostMapping("/")
     @Operation(summary = "Add category")
-    public ResponseEntity<String> addCategory(@RequestBody Category category) {
+    public ResponseEntity<String> addCategory(@Valid @RequestBody Category category) {
         try {
             System.out.println("Received category: " + category.getName() + category.getTest());
             categoryService.addCategory(category);
