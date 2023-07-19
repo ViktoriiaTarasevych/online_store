@@ -3,6 +3,7 @@ package com.teamchallenge.online_store.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ public class Category {
     private Long id;
 
     @JsonProperty
-    @Column(nullable = false)
+    @NotNull
     private String name;
 
     private String test;
