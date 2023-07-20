@@ -27,7 +27,7 @@ public class CategoryService {
 
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Категорію не знайдена"));
+                .orElseThrow(() -> new NoSuchElementException("Категорію не знайдено"));
     }
 
     public void updateCategory(Long id, Category updatedCategory) {
