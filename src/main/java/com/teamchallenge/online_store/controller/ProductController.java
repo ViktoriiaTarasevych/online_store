@@ -67,8 +67,6 @@ public class ProductController {
     @Operation(summary = "Update product by id")
     public ResponseEntity<String> updateProductById(@PathVariable Long id, @RequestBody Product updatedProduct) {
         try {
-            Category category = categoryService.getCategoryById(updatedProduct.getCategory().getId());
-            updatedProduct.setCategory(category);
             productService.updateProduct(id, updatedProduct);
             return ResponseEntity.ok("Продукт оновлено");
         } catch (NoSuchElementException e) {
