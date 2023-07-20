@@ -2,6 +2,7 @@ package com.teamchallenge.online_store.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,11 +11,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
+
 @Entity
 public class Category {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
+    @Schema(accessMode = READ_ONLY)
     private Long id;
 
     @JsonProperty
@@ -56,6 +60,7 @@ public class Category {
         this.name = name;
     }
 
+    @Schema(accessMode = READ_ONLY)
     public List<Long> getProductIds() {
         List<Long> productIds = new ArrayList<>();
         for (Product product : products) {
