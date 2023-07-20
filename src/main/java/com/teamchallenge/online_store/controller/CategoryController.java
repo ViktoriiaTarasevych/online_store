@@ -28,9 +28,8 @@ public class CategoryController {
     @Operation(summary = "Add category")
     public ResponseEntity<String> addCategory(@Valid @RequestBody Category category) {
         try {
-            System.out.println("Received category: " + category.getName() + category.getTest());
             categoryService.addCategory(category);
-            return ResponseEntity.ok("Категорію успішно додано " + category.getName() + category.getTest());
+            return ResponseEntity.ok("Категорію успішно додано ");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Не вдалося додати категорію: " + e.getMessage());

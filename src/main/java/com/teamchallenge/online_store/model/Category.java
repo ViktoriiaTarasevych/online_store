@@ -21,8 +21,6 @@ public class Category {
     @NotNull
     private String name;
 
-    private String test;
-
     @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private Set<Product> products;
@@ -31,13 +29,6 @@ public class Category {
         return id;
     }
 
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
-    }
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,7 +41,6 @@ public class Category {
         this.name = name;
     }
 
-
     public Set<Product> getProducts() {
         return products;
     }
@@ -62,10 +52,8 @@ public class Category {
     public Category() {
     }
 
-
-    public Category(String name, String test) {
+    public Category(String name) {
         this.name = name;
-        this.test = test;
     }
 
     public List<Long> getProductIds() {
