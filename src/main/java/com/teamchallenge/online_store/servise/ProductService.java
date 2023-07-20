@@ -32,7 +32,7 @@ public class ProductService {
         pageModel.setTotalElement(page.getTotalElements());
 
         return pageModel;
-    }   /// не пишеться імя продукту та категорії
+    }
 
     public Product getProductById(Long id) {
         return productRepository.findById(id)
@@ -42,6 +42,8 @@ public class ProductService {
     public void updateProduct(Long id, Product updatedProduct) {
         Product existingProduct = getProductById(id);
         existingProduct.setName(updatedProduct.getName());
+        existingProduct.setDescription(updatedProduct.getDescription());
+        existingProduct.setPrice(updatedProduct.getPrice());
     //    existingProduct.setCategory(updatedProduct.getCategory()); перевірити потім це
         productRepository.save(existingProduct);
     }
