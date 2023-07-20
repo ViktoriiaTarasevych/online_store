@@ -18,7 +18,6 @@ public class Category {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    @Schema(accessMode = READ_ONLY)
     private Long id;
 
     @JsonProperty
