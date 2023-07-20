@@ -44,7 +44,7 @@ public class ProductService {
         existingProduct.setName(updatedProduct.getName());
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setPrice(updatedProduct.getPrice());
-    //    existingProduct.setCategory(updatedProduct.getCategory()); перевірити потім це
+        existingProduct.setCategory(updatedProduct.getCategory());
         productRepository.save(existingProduct);
     }
 
