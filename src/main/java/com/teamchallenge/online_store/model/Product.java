@@ -1,6 +1,5 @@
 package com.teamchallenge.online_store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
@@ -21,6 +20,8 @@ public class Product {
     private String description;
 
     private BigDecimal price;
+
+    boolean seasonNovelties;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -66,6 +67,15 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+
+    public boolean isSeasonNovelties() {
+        return seasonNovelties;
+    }
+
+    public void setSeasonNovelties(boolean seasonNovelties) {
+        this.seasonNovelties = seasonNovelties;
     }
 
     public Product(Long id, String name, String description, BigDecimal price, Category category) {

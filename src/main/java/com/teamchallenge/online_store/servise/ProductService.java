@@ -57,4 +57,16 @@ public class ProductService {
     public List<Product> getProductsByCategory (Category category) {
         return productRepository.findByCategory(category);
     }
+
+    public PageModel<Product> getSeasonNovelties(Pageable pageable) {
+        Page<Product> page = productRepository.findBySeasonNoveltiesTrue(pageable);
+
+        PageModel<Product> pageModel = new PageModel<>();
+        pageModel.setContent(page.getContent());
+        pageModel.setPageNumber(page.getNumber());
+        pageModel.setPageSize(page.getSize());
+        pageModel.setTotalElement(page.getTotalElements());
+
+        return pageModel;
+    }
 }

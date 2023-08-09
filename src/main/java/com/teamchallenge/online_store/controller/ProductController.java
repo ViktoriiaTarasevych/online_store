@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.NoSuchElementException;
 
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
@@ -92,4 +94,23 @@ public class ProductController {
                     .body("Не вдалося видалити продукт: " + e.getMessage());
         }
     }
+
+    @GetMapping("/season-novelties")
+    @Operation(summary = "Get season novelties")
+    public ResponseEntity<PageModel<Product>> getProducts(
+            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        if (seasonNovelties) {
+            Pageable pageable = PageRequest.of(page, size);
+            PageModel<Product> seasonNoveltiesPage = productService.getSeasonNovelties(pageable);
+            return ResponseEntity.ok(seasonNoveltiesPage);
+        } else {
+            Pageable pageable = PageRequest.of(page, size);
+            PageModel<Product> allProductsPage = productService.getAllProducts(pageable);
+            return ResponseEntity.ok(allProductsPage);
+        }
+    }
+
 }
