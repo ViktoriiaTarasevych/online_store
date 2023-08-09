@@ -46,6 +46,7 @@ public class ProductService {
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setPrice(updatedProduct.getPrice());
         existingProduct.setCategory(updatedProduct.getCategory());
+        existingProduct.setSeasonNovelties(updatedProduct.isSeasonNovelties());
         productRepository.save(existingProduct);
     }
 
