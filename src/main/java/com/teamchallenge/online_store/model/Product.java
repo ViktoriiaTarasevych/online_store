@@ -20,8 +20,8 @@ public class Product {
     private String description;
 
     private BigDecimal price;
-
-    boolean seasonNovelties;
+    @Column(name = "season_novelties", nullable = false)
+    boolean seasonNovelties = false;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
