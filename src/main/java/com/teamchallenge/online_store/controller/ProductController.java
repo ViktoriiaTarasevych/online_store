@@ -68,6 +68,7 @@ public class ProductController {
     @Operation(summary = "Get products")
     public ResponseEntity<PageModel<Product>> getProducts(
             @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
+            @RequestParam(name = "popular_products", defaultValue = "false") boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 
@@ -76,6 +77,9 @@ public class ProductController {
 
         if (seasonNovelties) {
             products = productService.getSeasonNovelties(pageable);
+        } else if (popularProducts) {
+            products = productService.getPopularProducts(pageable);
+
         } else {
             products = productService.getAllProducts(pageable);
         }
@@ -113,23 +117,4 @@ public class ProductController {
                     .body("Не вдалося видалити продукт: " + e.getMessage());
         }
     }
-
-//    @GetMapping(value = "/", params = "season_novelties=true")
-//    @Operation(summary = "Get season novelties")
-//    public ResponseEntity<PageModel<Product>> getProducts(
-//            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size) {
-//
-//        if (seasonNovelties) {
-//            Pageable pageable = PageRequest.of(page, size);
-//            PageModel<Product> seasonNoveltiesPage = productService.getSeasonNovelties(pageable);
-//            return ResponseEntity.ok(seasonNoveltiesPage);
-//        } else {
-//            Pageable pageable = PageRequest.of(page, size);
-//            PageModel<Product> allProductsPage = productService.getAllProducts(pageable);
-//            return ResponseEntity.ok(allProductsPage);
-//        }
-//    }
-
 }

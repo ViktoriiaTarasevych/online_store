@@ -70,4 +70,17 @@ public class ProductService {
 
         return pageModel;
     }
+
+    public PageModel<Product> getPopularProducts(Pageable pageable) {
+        Page<Product> page = productRepository.findByPopularProductsTrue(pageable);
+
+        PageModel<Product> pageModel = new PageModel<>();
+        pageModel.setContent(page.getContent());
+        pageModel.setPageNumber(page.getNumber());
+        pageModel.setPageSize(page.getSize());
+        pageModel.setTotalElement(page.getTotalElements());
+
+        return pageModel;
+    }
+
 }

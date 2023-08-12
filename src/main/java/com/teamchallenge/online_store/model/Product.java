@@ -23,6 +23,9 @@ public class Product {
     @Column(name = "season_novelties", nullable = false)
     boolean seasonNovelties = false;
 
+    @Column(name = "popular_products", nullable = false)
+    boolean popularProducts = false;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -76,6 +79,15 @@ public class Product {
 
     public void setSeasonNovelties(boolean seasonNovelties) {
         this.seasonNovelties = seasonNovelties;
+    }
+
+
+    public boolean isPopularProducts() {
+        return popularProducts;
+    }
+
+    public void setPopularProducts(boolean popularProducts) {
+        this.popularProducts = popularProducts;
     }
 
     public Product(Long id, String name, String description, BigDecimal price, Category category) {
