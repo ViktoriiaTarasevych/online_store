@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
 
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api")
 @Tag(name = "Product")
 public class ProductController {
 
@@ -32,7 +32,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping("/products/")
     @Operation(summary = "Add product")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
@@ -48,24 +48,43 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/products/{id}")
     @Operation(summary = "Get product by id")
     public Product getProductById(@PathVariable Long id) {
         Product product = productService.getProductById(id);
-         product.getCategory().getName();
+        product.getCategory().getName();
         return product;
     } /// не виводяться імя продукту та категорії id та імя
 
-    @GetMapping("/")
-    @Operation(summary = "Get all products")
-    public PageModel<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
-                                             @RequestParam(defaultValue = "10") int size) {
+//    @GetMapping("/")
+//    @Operation(summary = "Get all products")
+//    public PageModel<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
+//                                             @RequestParam(defaultValue = "10") int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        return productService.getAllProducts(pageable);
+//    }
+
+    @GetMapping("/products")
+    @Operation(summary = "Get products")
+    public ResponseEntity<PageModel<Product>> getProducts(
+            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
         Pageable pageable = PageRequest.of(page, size);
-        return productService.getAllProducts(pageable);
+        PageModel<Product> products;
+
+        if (seasonNovelties) {
+            products = productService.getSeasonNovelties(pageable);
+        } else {
+            products = productService.getAllProducts(pageable);
+        }
+
+        return ResponseEntity.ok(products);
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/products/{id}")
     @Operation(summary = "Update product by id")
     public ResponseEntity<String> updateProductById(@PathVariable Long id, @RequestBody Product updatedProduct) {
         try {
@@ -80,7 +99,7 @@ public class ProductController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/products/{id}")
     @Operation(summary = "Delete product by id")
     public ResponseEntity<String> deleteProductById(@PathVariable Long id) {
         try {
@@ -95,22 +114,22 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/season-novelties")
-    @Operation(summary = "Get season novelties")
-    public ResponseEntity<PageModel<Product>> getProducts(
-            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-
-        if (seasonNovelties) {
-            Pageable pageable = PageRequest.of(page, size);
-            PageModel<Product> seasonNoveltiesPage = productService.getSeasonNovelties(pageable);
-            return ResponseEntity.ok(seasonNoveltiesPage);
-        } else {
-            Pageable pageable = PageRequest.of(page, size);
-            PageModel<Product> allProductsPage = productService.getAllProducts(pageable);
-            return ResponseEntity.ok(allProductsPage);
-        }
-    }
+//    @GetMapping(value = "/", params = "season_novelties=true")
+//    @Operation(summary = "Get season novelties")
+//    public ResponseEntity<PageModel<Product>> getProducts(
+//            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "10") int size) {
+//
+//        if (seasonNovelties) {
+//            Pageable pageable = PageRequest.of(page, size);
+//            PageModel<Product> seasonNoveltiesPage = productService.getSeasonNovelties(pageable);
+//            return ResponseEntity.ok(seasonNoveltiesPage);
+//        } else {
+//            Pageable pageable = PageRequest.of(page, size);
+//            PageModel<Product> allProductsPage = productService.getAllProducts(pageable);
+//            return ResponseEntity.ok(allProductsPage);
+//        }
+//    }
 
 }
