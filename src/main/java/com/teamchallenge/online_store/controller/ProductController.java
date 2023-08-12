@@ -75,11 +75,12 @@ public class ProductController {
         Pageable pageable = PageRequest.of(page, size);
         PageModel<Product> products;
 
-        if (seasonNovelties) {
+        if (seasonNovelties && !popularProducts) {
             products = productService.getSeasonNovelties(pageable);
-        } else if (popularProducts) {
+        } else if (!seasonNovelties && popularProducts) {
             products = productService.getPopularProducts(pageable);
-
+        } else if (seasonNovelties && popularProducts) {
+            products = productService.getSeasonNoveltiesAndPopularProducts(pageable);
         } else {
             products = productService.getAllProducts(pageable);
         }
