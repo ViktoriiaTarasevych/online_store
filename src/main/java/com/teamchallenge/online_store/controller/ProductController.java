@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
@@ -54,15 +53,7 @@ public class ProductController {
         Product product = productService.getProductById(id);
         product.getCategory().getName();
         return product;
-    } /// не виводяться імя продукту та категорії id та імя
-
-//    @GetMapping("/")
-//    @Operation(summary = "Get all products")
-//    public PageModel<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
-//                                             @RequestParam(defaultValue = "10") int size) {
-//        Pageable pageable = PageRequest.of(page, size);
-//        return productService.getAllProducts(pageable);
-//    }
+    }
 
     @GetMapping("/products")
     @Operation(summary = "Get products")
@@ -81,6 +72,10 @@ public class ProductController {
             products = productService.getPopularProducts(pageable);
         } else if (seasonNovelties && popularProducts) {
             products = productService.getSeasonNoveltiesAndPopularProducts(pageable);
+        } else if (!seasonNovelties) {
+            products = productService.getOtherProductsExceptSeasonNovelties(pageable);
+        } else if (!popularProducts) {
+            products = productService.getOtherProductsExceptPopularProducts(pageable);
         } else {
             products = productService.getAllProducts(pageable);
         }
