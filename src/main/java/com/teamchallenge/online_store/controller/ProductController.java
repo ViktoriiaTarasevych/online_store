@@ -69,17 +69,17 @@ public class ProductController {
 
         if (seasonNovelties && popularProducts) {
             products = productService.getSeasonNoveltiesAndPopularProducts(pageable);
-        } else if  (seasonNovelties) {
+        } else if (seasonNovelties) {
             products = productService.getSeasonNovelties(pageable);
         } else if (popularProducts) {
             products = productService.getPopularProducts(pageable);
-        }  else if (!seasonNovelties && !popularProducts) {
-                products = productService.getAllProducts(pageable);
         } else if (!seasonNovelties) {
             products = productService.getOtherProductsExceptSeasonNovelties(pageable);
         } else if (!popularProducts) {
             products = productService.getOtherProductsExceptPopularProducts(pageable);
-        } else {
+        } else if (!seasonNovelties && !popularProducts) {
+            products = productService.getAllProducts(pageable);
+        }  else {
             products = productService.getAllProducts(pageable);
         }
 
