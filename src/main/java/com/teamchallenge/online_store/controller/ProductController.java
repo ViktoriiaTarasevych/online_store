@@ -77,7 +77,9 @@ public class ProductController {
             products = productService.getOtherProductsExceptSeasonNovelties(pageable);
         } else if (!popularProducts) {
             products = productService.getOtherProductsExceptPopularProducts(pageable);
-        } else {
+        } else if (!seasonNovelties && !popularProducts) {
+            products = productService.getAllProducts(pageable);
+        }else {
             products = productService.getAllProducts(pageable);
         }
 
