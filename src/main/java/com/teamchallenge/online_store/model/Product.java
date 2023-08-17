@@ -20,10 +20,10 @@ public class Product {
     private String description;
 
     private BigDecimal price;
-    @Column(name = "season_novelties")
+    @Column(name = "season_novelties", nullable = false)
     boolean seasonNovelties = false;
 
-    @Column(name = "popular_products")
+    @Column(name = "popular_products", nullable = false)
     boolean popularProducts = false;
 
     @ManyToOne
