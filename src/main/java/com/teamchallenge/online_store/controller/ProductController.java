@@ -59,8 +59,8 @@ public class ProductController {
     @GetMapping("/products")
     @Operation(summary = "Get products")
     public ResponseEntity<PageModel<Product>> getProducts(
-            @RequestParam(name = "season_novelties") boolean seasonNovelties,
-            @RequestParam(name = "popular_products") boolean popularProducts,
+            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
+            @RequestParam(name = "popular_products", defaultValue = "false") boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 
