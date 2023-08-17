@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 
 //@CrossOrigin(origins = "http://localhost:3000, https://candle-shop-by-ninjas-team.vercel.app")
@@ -59,8 +60,8 @@ public class ProductController {
     @GetMapping("/products")
     @Operation(summary = "Get products")
     public ResponseEntity<PageModel<Product>> getProducts(
-            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
-            @RequestParam(name = "popular_products", defaultValue = "false") boolean popularProducts,
+            @RequestParam(name = "season_novelties") boolean seasonNovelties,
+            @RequestParam(name = "popular_products") boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 
@@ -77,7 +78,7 @@ public class ProductController {
             products = productService.getOtherProductsExceptSeasonNovelties(pageable);
         } else if (!popularProducts) {
             products = productService.getOtherProductsExceptPopularProducts(pageable);
-        } else if (!seasonNovelties && !popularProducts) {
+        } else if (Objects.isNull(seasonNovelties)&&(Objects.isNull(popularProducts))) {
             products = productService.getAllProducts(pageable);
         }  else {
             products = productService.getAllProducts(pageable);
