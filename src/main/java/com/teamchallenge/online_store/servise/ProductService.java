@@ -60,6 +60,10 @@ public class ProductService {
         return productRepository.findByCategory(category);
     }
 
+    public List<Product> getProductsByCategory2 (String category) {
+        return productRepository.findByCategory(category);
+    }
+
     public PageModel<Product> getSeasonNovelties(Pageable pageable) {
         Page<Product> page = productRepository.findBySeasonNoveltiesTrue(pageable);
 

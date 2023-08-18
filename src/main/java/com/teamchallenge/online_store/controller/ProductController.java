@@ -119,8 +119,8 @@ public class ProductController {
     }
 
     @GetMapping("/testproducts")
-    public ResponseEntity<List<Product>> getProductsByCategory(@RequestParam("category") Category category) {
-        List<Product> products = productService.getProductsByCategory(category);
+    public ResponseEntity<List<Product>> getProductsByCategory(@RequestParam("category") String category) {
+        List<Product> products = productService.getProductsByCategory2(category);
         return ResponseEntity.ok(products);
     }
 
