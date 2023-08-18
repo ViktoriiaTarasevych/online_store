@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -115,5 +116,12 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Не вдалося видалити продукт: " + e.getMessage());
         }
+    }
+
+
+    @GetMapping("/testproducts")
+    public ResponseEntity<List<Product>> getProductsByCategory(@RequestParam("category") String category) {
+        List<Product> products = productService.getProductsByCategory(category);
+        return ResponseEntity.ok(products);
     }
 }

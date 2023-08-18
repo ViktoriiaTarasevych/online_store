@@ -1,6 +1,5 @@
 package com.teamchallenge.online_store.servise;
 
-import com.teamchallenge.online_store.model.Category;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.repository.ProductRepository;
@@ -56,7 +55,7 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    public List<Product> getProductsByCategory (Category category) {
+    public List<Product> getProductsByCategory (String category) {
         return productRepository.findByCategory(category);
     }
 
