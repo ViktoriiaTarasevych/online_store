@@ -36,6 +36,10 @@ public class ProductService {
         return pageModel;
     }
 
+    public List<Product> getAllProducts (String category) {
+        return productRepository.findAll(category);
+    }
+
     public Product getProductById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Продукт не знайдено"));
