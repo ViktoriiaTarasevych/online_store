@@ -80,7 +80,7 @@ public class ProductController {
             products = productService.getOtherProductsExceptPopularProducts(pageable);
         } else if (!seasonNovelties && !popularProducts) {
             products = productService.getAllProducts(pageable);
-        }  else {
+        } else {
             products = productService.getAllProducts(pageable);
         }
 
@@ -128,6 +128,19 @@ public class ProductController {
         } else {
             products = productService.getProductsByPopularity(false); // Fetch all products by default
         }
+
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/products/filter")
+    public ResponseEntity<PageModel<Product>> getProductsByFilters(
+            @RequestParam(name = "seasonNovelties", defaultValue = "false") boolean seasonNovelties,
+            @RequestParam(name = "popularProducts", defaultValue = "false") boolean popularProducts,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        PageModel<Product> products = productService.getProductsByFilters(seasonNovelties, popularProducts, pageable);
 
         return ResponseEntity.ok(products);
     }

@@ -4,6 +4,7 @@ import com.teamchallenge.online_store.model.Category;
 import com.teamchallenge.online_store.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findBySeasonNoveltiesTrueAndPopularProductsTrue(Pageable pageable);
 
     List<Product> findByPopularProducts(boolean popular);
+
+    Page<Product> findAll(Specification<Product> where, Pageable pageable);
 }
+
 
 

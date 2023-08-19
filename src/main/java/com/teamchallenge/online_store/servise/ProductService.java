@@ -4,9 +4,13 @@ import com.teamchallenge.online_store.model.Category;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.repository.ProductRepository;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -139,4 +143,35 @@ public class ProductService {
             return productRepository.findAll();
         }
     }
+
+    public PageModel<Product> getProductsByFilters(boolean seasonNovelties, boolean popularProducts, Pageable pageable) {
+        Specification<Product> where = Specification.where((root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (seasonNovelties) {
+                predicates.add(criteriaBuilder.isTrue(root.get("seasonNovelties")));
+            }
+
+            if (popularProducts) {
+                predicates.add(criteriaBuilder.isTrue(root.get("popularProducts")));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
+        });
+
+        Page<Product> products = productRepository.findAll(where, pageable);
+
+        PageModel<Product> pageModel = new PageModel<>();
+        pageModel.setContent(products.getContent());
+        pageModel.setPageNumber(products.getNumber());
+        pageModel.setPageSize(products.getSize());
+        pageModel.setTotalElement(products.getTotalElements());
+
+        return pageModel;
+    }
+
+
+
+
+
 }
