@@ -23,8 +23,8 @@ public class Product {
     @Column(name = "season_novelties", nullable = false)
     boolean seasonNovelties = false;
 
-    @Column(name = "popular_products", nullable = false)
-    boolean popularProducts = false;
+    @Column(name = "popular_products")
+    boolean popularProducts;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

@@ -36,10 +36,6 @@ public class ProductService {
         return pageModel;
     }
 
-    public List<Product> getAllProducts (String category) {
-        return productRepository.findAll(category);
-    }
-
     public Product getProductById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Продукт не знайдено"));
@@ -61,10 +57,6 @@ public class ProductService {
     }
 
     public List<Product> getProductsByCategory (Category category) {
-        return productRepository.findByCategory(category);
-    }
-
-    public List<Product> getProductsByCategory2 (String category) {
         return productRepository.findByCategory(category);
     }
 
@@ -137,5 +129,14 @@ public class ProductService {
         otherProductsPageModel.setTotalElement(productPage.getTotalElements());
 
         return otherProductsPageModel;
+    }
+
+
+    public List<Product> getProductsByPopularity(boolean popular) {
+        if (popular) {
+            return productRepository.findByPopularProducts(true);
+        } else {
+            return productRepository.findAll();
+        }
     }
 }

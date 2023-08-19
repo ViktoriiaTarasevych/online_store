@@ -118,17 +118,18 @@ public class ProductController {
         }
     }
 
+
     @GetMapping("/testproducts")
-    public ResponseEntity<List<Product>> getProductsByCategory(@RequestParam("category") String category) {
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(value = "popular", required = false) Boolean popular) {
+        List<Product> products;
 
-      if (category == null) {
-        List<Product> products = productService.getAllProducts(category);;
+        if (popular != null) {
+            products = productService.getProductsByPopularity(popular);
+        } else {
+            products = productService.getProductsByPopularity(false); // Fetch all products by default
+        }
+
         return ResponseEntity.ok(products);
-    } else {
-          List<Product> products = productService.getProductsByCategory2(category);
-          return ResponseEntity.ok(products);
-      }
     }
-
 
 }
