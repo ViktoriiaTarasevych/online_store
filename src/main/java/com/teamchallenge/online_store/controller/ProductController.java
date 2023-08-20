@@ -60,8 +60,8 @@ public class ProductController {
     @GetMapping("/products")
     @Operation(summary = "Get products")
     public ResponseEntity<PageModel<Product>> getProducts(
-            @RequestParam(name = "season_novelties", defaultValue = "false") boolean seasonNovelties,
-            @RequestParam(name = "popular_products", defaultValue = "false") boolean popularProducts,
+            @RequestParam(name = "season_novelties") Boolean seasonNovelties,
+            @RequestParam(name = "popular_products") Boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 
@@ -86,6 +86,32 @@ public class ProductController {
 
         return ResponseEntity.ok(products);
     }
+
+    @GetMapping("/products1")
+    @Operation(summary = "Get products")
+    public ResponseEntity<PageModel<Product>> getProducts1(
+            @RequestParam(name = "season_novelties") Boolean seasonNovelties,
+
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        PageModel<Product> products;
+
+
+         if (seasonNovelties) {
+            products = productService.getSeasonNovelties(pageable);
+
+        }  else if (!seasonNovelties) {
+            products = productService.getOtherProductsExceptSeasonNovelties(pageable);
+        }   else {
+            products = productService.getAllProducts(pageable);
+        }
+
+        return ResponseEntity.ok(products);
+    }
+
+
 
 
     @PutMapping("/products/{id}")
@@ -134,8 +160,8 @@ public class ProductController {
 
     @GetMapping("/products/filter")
     public ResponseEntity<PageModel<Product>> getProductsByFilters(
-            @RequestParam(name = "seasonNovelties", defaultValue = "false") boolean seasonNovelties,
-            @RequestParam(name = "popularProducts", defaultValue = "false") boolean popularProducts,
+            @RequestParam(name = "seasonNovelties") Boolean seasonNovelties,
+            @RequestParam(name = "popularProducts") Boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 

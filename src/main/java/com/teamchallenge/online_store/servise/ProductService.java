@@ -136,7 +136,7 @@ public class ProductService {
     }
 
 
-    public List<Product> getProductsByPopularity(boolean popular) {
+    public List<Product> getProductsByPopularity(Boolean popular) {
         if (popular) {
             return productRepository.findByPopularProducts(true);
         } else {
@@ -144,7 +144,7 @@ public class ProductService {
         }
     }
 
-    public PageModel<Product> getProductsByFilters(boolean seasonNovelties, boolean popularProducts, Pageable pageable) {
+    public PageModel<Product> getProductsByFilters(Boolean seasonNovelties, Boolean popularProducts, Pageable pageable) {
         Specification<Product> where = Specification.where((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
