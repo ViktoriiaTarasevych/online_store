@@ -34,7 +34,7 @@ public class EmailService {
 
 
     public void sendEmail(String toEmail, String text) throws MailjetException {
-        MailjetRequest request = new MailjetRequest(Emailv31.resource)
+        MailjetRequest request = new MailjetRequest(Email.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
                         .put(new JSONObject()
                                 .put(Emailv31.Message.FROM, new JSONObject()
