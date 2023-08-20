@@ -90,7 +90,7 @@ public class ProductController {
     @GetMapping("/products1")
     @Operation(summary = "Get products")
     public ResponseEntity<PageModel<Product>> getProducts1(
-            @RequestParam(name = "season_novelties") Boolean seasonNovelties,
+            @RequestParam(name = "season_novelties", required = false ) Boolean seasonNovelties,
 
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
