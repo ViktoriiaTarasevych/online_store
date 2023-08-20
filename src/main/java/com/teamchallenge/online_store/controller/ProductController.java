@@ -99,14 +99,16 @@ public class ProductController {
         PageModel<Product> products;
 
 
-         if (seasonNovelties) {
-            products = productService.getSeasonNovelties(pageable);
-
-        }  else if (!seasonNovelties) {
-            products = productService.getOtherProductsExceptSeasonNovelties(pageable);
-        }   else {
+        if (seasonNovelties != null) {
+            if (seasonNovelties) {
+                products = productService.getSeasonNovelties(pageable);
+            } else {
+                products = productService.getOtherProductsExceptSeasonNovelties(pageable);
+            }
+        } else {
             products = productService.getAllProducts(pageable);
         }
+
 
         return ResponseEntity.ok(products);
     }
