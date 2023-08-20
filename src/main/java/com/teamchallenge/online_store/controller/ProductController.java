@@ -91,7 +91,7 @@ public class ProductController {
     @Operation(summary = "Get products")
     public ResponseEntity<PageModel<Product>> getProducts1(
             @RequestParam(name = "season_novelties", required = false ) Boolean seasonNovelties,
-
+            @RequestParam(name = "popular_products", required = false ) Boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size) {
 
@@ -105,6 +105,13 @@ public class ProductController {
             } else {
                 products = productService.getOtherProductsExceptSeasonNovelties(pageable);
             }
+        } else if (popularProducts != null) {
+            if (popularProducts) {
+                products = productService.getPopularProducts(pageable);
+            } else {
+                products = productService.getOtherProductsExceptPopularProducts(pageable);
+            }
+
         } else {
             products = productService.getAllProducts(pageable);
         }
@@ -145,32 +152,4 @@ public class ProductController {
                     .body("Не вдалося видалити продукт: " + e.getMessage());
         }
     }
-
-
-    @GetMapping("/testproducts")
-    public ResponseEntity<List<Product>> getProducts(@RequestParam(value = "popular", required = false) Boolean popular) {
-        List<Product> products;
-
-        if (popular != null) {
-            products = productService.getProductsByPopularity(popular);
-        } else {
-            products = productService.getProductsByPopularity(false); // Fetch all products by default
-        }
-
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/products/filter")
-    public ResponseEntity<PageModel<Product>> getProductsByFilters(
-            @RequestParam(name = "seasonNovelties") Boolean seasonNovelties,
-            @RequestParam(name = "popularProducts") Boolean popularProducts,
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size) {
-
-        Pageable pageable = PageRequest.of(page, size);
-        PageModel<Product> products = productService.getProductsByFilters(seasonNovelties, popularProducts, pageable);
-
-        return ResponseEntity.ok(products);
-    }
-
 }
