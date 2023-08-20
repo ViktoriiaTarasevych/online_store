@@ -57,39 +57,10 @@ public class ProductController {
         return product;
     }
 
+
     @GetMapping("/products")
     @Operation(summary = "Get products")
     public ResponseEntity<PageModel<Product>> getProducts(
-            @RequestParam(name = "season_novelties") Boolean seasonNovelties,
-            @RequestParam(name = "popular_products") Boolean popularProducts,
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size) {
-
-        Pageable pageable = PageRequest.of(page, size);
-        PageModel<Product> products;
-
-        if (seasonNovelties && popularProducts) {
-            products = productService.getSeasonNoveltiesAndPopularProducts(pageable);
-        } else if (seasonNovelties) {
-            products = productService.getSeasonNovelties(pageable);
-        } else if (popularProducts) {
-            products = productService.getPopularProducts(pageable);
-        } else if (!seasonNovelties) {
-            products = productService.getOtherProductsExceptSeasonNovelties(pageable);
-        } else if (!popularProducts) {
-            products = productService.getOtherProductsExceptPopularProducts(pageable);
-        } else if (!seasonNovelties && !popularProducts) {
-            products = productService.getAllProducts(pageable);
-        } else {
-            products = productService.getAllProducts(pageable);
-        }
-
-        return ResponseEntity.ok(products);
-    }
-
-    @GetMapping("/products1")
-    @Operation(summary = "Get products")
-    public ResponseEntity<PageModel<Product>> getProducts1(
             @RequestParam(name = "season_novelties", required = false ) Boolean seasonNovelties,
             @RequestParam(name = "popular_products", required = false ) Boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
@@ -99,7 +70,17 @@ public class ProductController {
         PageModel<Product> products;
 
 
-        if (seasonNovelties != null) {
+        if (seasonNovelties != null && popularProducts != null) {
+            if (seasonNovelties && popularProducts) {
+                products = productService.getSeasonNoveltiesAndPopularProducts(pageable);
+            } else if (seasonNovelties) {
+                products = productService.getSeasonNovelties(pageable);
+            } else if (popularProducts) {
+                products = productService.getPopularProducts(pageable);
+            } else {
+                products = productService.getAllProducts(pageable);
+            }
+        } else if (seasonNovelties != null) {
             if (seasonNovelties) {
                 products = productService.getSeasonNovelties(pageable);
             } else {
@@ -111,7 +92,6 @@ public class ProductController {
             } else {
                 products = productService.getOtherProductsExceptPopularProducts(pageable);
             }
-
         } else {
             products = productService.getAllProducts(pageable);
         }
@@ -119,8 +99,6 @@ public class ProductController {
 
         return ResponseEntity.ok(products);
     }
-
-
 
 
     @PutMapping("/products/{id}")
