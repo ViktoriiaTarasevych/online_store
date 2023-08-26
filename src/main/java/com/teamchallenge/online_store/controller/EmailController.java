@@ -41,6 +41,19 @@ public class EmailController {
             mailjetService.send2(request.getToEmail(), request.getText());
             return ResponseEntity.ok("Email sent successfully");
         } catch (MailjetException | MailjetSocketTimeoutException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email");
+        }
+    }
+
+
+    @PostMapping("/send3")
+    public ResponseEntity<String> send3 (@RequestBody EmailRequest request) {
+        try {
+            mailjetService.send3(request.getToEmail(), request.getText());
+            return ResponseEntity.ok("Email sent successfully");
+        } catch (MailjetException | MailjetSocketTimeoutException e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email");
         }
     }

@@ -53,7 +53,8 @@ public class EmailService {
             e.printStackTrace();
         }
     }
-    public void send2 (String toEmail, String text) throws MailjetException, MailjetSocketTimeoutException {
+
+    public void send2(String toEmail, String text) throws MailjetException, MailjetSocketTimeoutException {
 
         MailjetRequest request;
         MailjetResponse response;
@@ -73,6 +74,28 @@ public class EmailService {
         response = client.post(request);
         System.out.println(response.getStatus());
         System.out.println(response.getData());
+    }
+
+
+    public void send3(String toEmail, String text) throws MailjetException, MailjetSocketTimeoutException {
+        MailjetRequest request = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.MESSAGES, new JSONArray()
+                        .put(new JSONObject()
+                                .put(Emailv31.Message.FROM, new JSONObject()
+                                        .put("Email", "vikka1836@gmail.com")
+                                        .put("Name", "Mailjet Pilot"))
+                                .put(Emailv31.Message.TO, new JSONArray()
+                                        .put(new JSONObject()
+                                                .put("Email", toEmail)
+                                                .put("Text", text)))
+                                .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
+                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
+                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+        MailjetResponse response = client.post(request);
+
+        if (response.getStatus() != 200) {
+            System.err.println("Error sending email. Mailjet response: " + response.getData());
+        }
     }
 }
 
