@@ -2,6 +2,7 @@ package com.teamchallenge.online_store.controller;
 
 
 import com.mailjet.client.errors.MailjetException;
+import com.teamchallenge.online_store.errors.MailjetSocketTimeoutException;
 import com.teamchallenge.online_store.model.EmailRequest;
 import com.teamchallenge.online_store.servise.EmailService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -30,6 +31,16 @@ public class EmailController {
             mailjetService.sendEmail(request.getToEmail(), request.getText());
             return ResponseEntity.ok("Email sent successfully");
         } catch (MailjetException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email");
+        }
+    }
+
+    @PostMapping("/send2")
+    public ResponseEntity<String> send2 (@RequestBody EmailRequest request) {
+        try {
+            mailjetService.send2(request.getToEmail(), request.getText());
+            return ResponseEntity.ok("Email sent successfully");
+        } catch (MailjetException | MailjetSocketTimeoutException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email");
         }
     }

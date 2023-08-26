@@ -5,10 +5,12 @@ import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Emailv31;
+import com.teamchallenge.online_store.errors.MailjetSocketTimeoutException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.mailjet.client.ClientOptions;
 
 
 @Service
@@ -51,7 +53,28 @@ public class EmailService {
             e.printStackTrace();
         }
     }
+    public void send2 (String toEmail, String text) throws MailjetException, MailjetSocketTimeoutException {
 
+        MailjetRequest request;
+        MailjetResponse response;
+        request = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.MESSAGES, new JSONArray()
+                        .put(new JSONObject()
+                                .put(Emailv31.Message.FROM, new JSONObject()
+                                        .put("Email", "vikka1836@gmail.com")
+                                        .put("Name", "Mailjet Pilot"))
+                                .put(Emailv31.Message.TO, new JSONArray()
+                                        .put(new JSONObject()
+                                                .put("Email", toEmail)
+                                                .put("Text", text)))
+                                .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
+                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
+                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
+        response = client.post(request);
+        System.out.println(response.getStatus());
+        System.out.println(response.getData());
+    }
+}
 
 
 //    public List<MailjetMessage> getMessages() throws MailjetException{
@@ -74,4 +97,4 @@ public class EmailService {
 //    }
 
 
-}
+
