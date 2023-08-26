@@ -41,8 +41,8 @@ public class EmailService {
                                     .put(Emailv31.Message.TO, new JSONArray()
                                             .put(new JSONObject()
                                                     .put("Email", toEmail)
-                                                    .put("Name", "Recipient Name")))
-                                    .put(Emailv31.Message.TEXTPART, text)));
+                                                    .put("Text", text)))
+                                    .put(Emailv31.Message.TEXTPART, "Перевірка")));
 
             MailjetResponse response = client.post(request);
             if (response.getStatus() != 200) {
