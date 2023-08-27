@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -64,9 +63,17 @@ public class ProductController {
             @RequestParam(name = "season_novelties", required = false ) Boolean seasonNovelties,
             @RequestParam(name = "popular_products", required = false ) Boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int size) {
+            @RequestParam(required = false, defaultValue = "10") int page_amount,
+            @RequestParam(required = false, defaultValue = "10") int offset,
+            @RequestParam(required = false, defaultValue = "10") int limit) {
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable;
+        if (offset >= 0 && limit > 0) {
+            pageable = PageRequest.of(offset / limit, limit);
+        } else {
+            pageable = PageRequest.of(page, page_amount);
+        }
+
         PageModel<Product> products;
 
 
@@ -95,7 +102,6 @@ public class ProductController {
         } else {
             products = productService.getAllProducts(pageable);
         }
-
 
         return ResponseEntity.ok(products);
     }
