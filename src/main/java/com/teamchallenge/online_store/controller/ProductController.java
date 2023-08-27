@@ -64,11 +64,11 @@ public class ProductController {
             @RequestParam(name = "popular_products", required = false ) Boolean popularProducts,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int page_amount,
-            @RequestParam(required = false, defaultValue = "10") int offset,
-            @RequestParam(required = false, defaultValue = "10") int limit) {
+            @RequestParam(required = false) Integer offset,
+            @RequestParam(required = false) Integer limit) {
 
         Pageable pageable;
-        if (offset >= 0 && limit > 0) {
+        if (offset != null && offset >= 0 && limit != null && limit > 0) {
             pageable = PageRequest.of(offset / limit, limit);
         } else {
             pageable = PageRequest.of(page, page_amount);
