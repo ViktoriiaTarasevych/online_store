@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 
 
@@ -65,7 +66,9 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int page_amount,
             @RequestParam(required = false) Integer offset,
-            @RequestParam(required = false) Integer limit) {
+            @RequestParam(required = false) Integer limit,
+            @RequestParam(required = false) BigDecimal min_price,
+            @RequestParam(required = false) BigDecimal max_price) {
 
         Pageable pageable;
         if (offset != null && offset >= 0 && limit != null && limit > 0) {
@@ -77,7 +80,9 @@ public class ProductController {
         PageModel<Product> products;
 
 
-        if (seasonNovelties != null && popularProducts != null) {
+        if (min_price != null && max_price != null) {
+            products = productService.getProductsByPriceRange(min_price, max_price, pageable);
+        } else if (seasonNovelties != null && popularProducts != null) {
             if (seasonNovelties && popularProducts) {
                 products = productService.getSeasonNoveltiesAndPopularProducts(pageable);
             } else if (seasonNovelties) {

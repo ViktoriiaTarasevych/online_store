@@ -1,12 +1,14 @@
 package com.teamchallenge.online_store.repository;
 
 import com.teamchallenge.online_store.model.Category;
+import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -23,6 +25,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByPopularProducts(Boolean popular);
 
     Page<Product> findAll(Specification<Product> where, Pageable pageable);
+
+    Page<Product> findByPriceBetween(BigDecimal price, BigDecimal price2, Pageable pageable);
 }
 
 

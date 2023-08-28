@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -170,8 +171,16 @@ public class ProductService {
         return pageModel;
     }
 
+    public PageModel<Product> getProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
 
+        Page<Product> page = productRepository.findByPriceBetween(minPrice, maxPrice, pageable);
 
+        PageModel<Product> pageModel = new PageModel<>();
+        pageModel.setContent(page.getContent());
+        pageModel.setPageNumber(page.getNumber());
+        pageModel.setPageSize(page.getSize());
+        pageModel.setTotalElement(page.getTotalElements());
 
-
+        return pageModel;
+    }
 }
