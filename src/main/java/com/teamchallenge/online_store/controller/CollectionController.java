@@ -78,7 +78,7 @@ public class CollectionController {
     }
 
     @GetMapping("/{collectionId}/products")
-    @Operation(summary = "Get all products in category")
+    @Operation(summary = "Get all products in collection")
     public Set<Product> getProductsByCategoryId(@PathVariable Long collectionId) {
         return collectionService.getProductsByCollectionId(collectionId);
     }
