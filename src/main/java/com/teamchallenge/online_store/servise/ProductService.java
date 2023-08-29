@@ -1,6 +1,6 @@
 package com.teamchallenge.online_store.servise;
 
-import com.teamchallenge.online_store.model.Category;
+import com.teamchallenge.online_store.model.Collection;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.repository.ProductRepository;
@@ -51,7 +51,7 @@ public class ProductService {
         existingProduct.setName(updatedProduct.getName());
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setPrice(updatedProduct.getPrice());
-        existingProduct.setCategory(updatedProduct.getCategory());
+        existingProduct.setCollection(updatedProduct.getCollection());
         existingProduct.setSeasonNovelties(updatedProduct.isSeasonNovelties());
         productRepository.save(existingProduct);
     }
@@ -61,8 +61,8 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    public List<Product> getProductsByCategory (Category category) {
-        return productRepository.findByCategory(category);
+    public List<Product> getProductsByCollection(Collection collection) {
+        return productRepository.findByCollection(collection);
     }
 
     public PageModel<Product> getSeasonNovelties(Pageable pageable) {

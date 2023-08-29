@@ -14,7 +14,7 @@ import java.util.Set;
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Entity
-public class Category {
+public class Collection {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class Category {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
     private Set<Product> products;
 
     public Long getId() {
@@ -52,10 +52,10 @@ public class Category {
         this.products = products != null ? products : new HashSet<>();
     }
 
-    public Category() {
+    public Collection() {
     }
 
-    public Category(String name) {
+    public Collection(String name) {
         this.name = name;
     }
 

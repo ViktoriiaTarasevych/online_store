@@ -29,9 +29,9 @@ public class EmailController {
     public ResponseEntity<String> sendEmail(@RequestBody EmailRequest request) {
         try {
             mailjetService.sendEmail(request.getToEmail(), request.getText());
-            return ResponseEntity.ok("Email sent successfully");
+            return ResponseEntity.ok("Електронна пошта успішно надіслана");
         } catch (MailjetException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Помилка надсилання електронного листа");
         }
     }
 
@@ -39,10 +39,10 @@ public class EmailController {
     public ResponseEntity<String> send2 (@RequestBody EmailRequest request) {
         try {
             mailjetService.send2(request.getToEmail(), request.getText());
-            return ResponseEntity.ok("Email sent successfully");
+            return ResponseEntity.ok("EЕлектронна пошта успішно надіслана");
         } catch (MailjetException | MailjetSocketTimeoutException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Помилка надсилання електронного листа");
         }
     }
 
@@ -51,10 +51,10 @@ public class EmailController {
     public ResponseEntity<String> send3 (@RequestBody EmailRequest request) {
         try {
             mailjetService.send3(request.getToEmail(), request.getText());
-            return ResponseEntity.ok("Email sent successfully");
+            return ResponseEntity.ok("Електронна пошта успішно надіслана");
         } catch (MailjetException | MailjetSocketTimeoutException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending email");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Помилка надсилання електронного листа");
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.teamchallenge.online_store.controller;
 
-import com.teamchallenge.online_store.model.Category;
+import com.teamchallenge.online_store.model.Collection;
 import com.teamchallenge.online_store.model.PageModel;
 import com.teamchallenge.online_store.model.Product;
-import com.teamchallenge.online_store.servise.CategoryService;
+import com.teamchallenge.online_store.servise.CollectionService;
 import com.teamchallenge.online_store.servise.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,11 +25,11 @@ public class ProductController {
 
     private final ProductService productService;
 
-    private final CategoryService categoryService;
+    private final CollectionService collectionService;
 
-    public ProductController(ProductService productService, CategoryService categoryService) {
+    public ProductController(ProductService productService, CollectionService collectionService) {
         this.productService = productService;
-        this.categoryService = categoryService;
+        this.collectionService = collectionService;
     }
 
 
@@ -37,8 +37,8 @@ public class ProductController {
     @Operation(summary = "Add product")
     public ResponseEntity<String> addProduct(@RequestBody Product product) {
         try {
-            Category category = categoryService.getCategoryById(product.getCategory().getId());
-            product.setCategory(category);
+            Collection collection = collectionService.getCollectionById(product.getCollection().getId());
+            product.setCollection(collection);
             productService.addProduct(product);
             return ResponseEntity.ok("Продукт успішно додано");
         } catch (NoSuchElementException e) {
@@ -53,7 +53,7 @@ public class ProductController {
     @Operation(summary = "Get product by id")
     public Product getProductById(@PathVariable Long id) {
         Product product = productService.getProductById(id);
-        product.getCategory().getName();
+        product.getCollection().getName();
         return product;
     }
 

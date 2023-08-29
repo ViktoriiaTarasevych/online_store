@@ -27,8 +27,8 @@ public class Product {
     Boolean popularProducts;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "collection_id")
+    private Collection collection;
 
     public Long getId() {
         return id;
@@ -47,12 +47,12 @@ public class Product {
     }
 
 
-    public Category getCategory() {
-        return category;
+    public Collection getCollection() {
+        return collection;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCollection(Collection collection) {
+        this.collection = collection;
     }
 
 
@@ -90,12 +90,12 @@ public class Product {
         this.popularProducts = popularProducts;
     }
 
-    public Product(Long id, String name, String description, BigDecimal price, Category category) {
+    public Product(Long id, String name, String description, BigDecimal price, Collection collection) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.category = category;
+        this.collection = collection;
     }
 
     public Product() {
