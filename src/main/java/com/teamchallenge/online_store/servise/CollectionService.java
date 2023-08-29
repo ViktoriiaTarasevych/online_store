@@ -33,6 +33,7 @@ public class CollectionService {
     public void updateCollection(Long id, Collection updatedCollection) {
         Collection existingCollection = getCollectionById(id);
         existingCollection.setName(updatedCollection.getName());
+        existingCollection.setImage(updatedCollection.getImage());
         collectionRepository.save(existingCollection);
     }
 

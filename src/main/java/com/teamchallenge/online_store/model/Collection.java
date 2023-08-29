@@ -24,6 +24,10 @@ public class Collection {
     @NotNull
     private String name;
 
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
+    private byte[] image;
+
     @JsonIgnore
     @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
     private Set<Product> products;
@@ -50,6 +54,15 @@ public class Collection {
 
     public void setProducts(Set<Product> products) {
         this.products = products != null ? products : new HashSet<>();
+    }
+
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Collection() {
