@@ -25,7 +25,7 @@ public class Collection {
     private String name;
 
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
+    @Column(columnDefinition = "BYTEA")
     private byte[] image;
 
     @JsonIgnore
