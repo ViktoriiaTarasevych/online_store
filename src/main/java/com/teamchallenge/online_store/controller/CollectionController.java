@@ -1,14 +1,19 @@
 package com.teamchallenge.online_store.controller;
 
 import com.teamchallenge.online_store.model.Collection;
+import com.teamchallenge.online_store.dto.CollectionResponse;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.servise.CollectionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -26,20 +31,37 @@ public class CollectionController {
 
     @PostMapping("/")
     @Operation(summary = "Add collection")
-    public ResponseEntity<String> addCategory(@Valid @RequestBody Collection collection) {
+    public ResponseEntity<String> addCategory(
+            @RequestParam("file") MultipartFile file,
+            @Valid @ModelAttribute Collection collection) {
         try {
+            byte[] imageBytes = file.getBytes();
+            collection.setImage(imageBytes);
             collectionService.addCollection(collection);
-            return ResponseEntity.ok("Колекцію  успішно додано ");
+            return ResponseEntity.ok("Колекцію успішно додано");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Не вдалося додати колекцію : " + e.getMessage());
+                    .body("Не вдалося додати колекцію: " + e.getMessage());
         }
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get collection by id")
-    public Collection getCategoryById(@PathVariable Long id) {
-        return collectionService.getCollectionById(id);
+    public ResponseEntity<CollectionResponse> getCollectionById(@PathVariable Long id) {
+        Collection collection = collectionService.getCollectionById(id);
+
+        if (collection == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        byte[] imageBytes = collection.getImage();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // або інший MediaType в залежності від типу зображення
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(new CollectionResponse(collection, imageBytes));
     }
 
     @PutMapping("/{id}")
