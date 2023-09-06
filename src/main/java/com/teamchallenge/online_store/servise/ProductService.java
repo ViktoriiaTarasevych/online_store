@@ -48,7 +48,7 @@ public class ProductService {
 
     public void updateProduct(Long id, Product updatedProduct) {
         Product existingProduct = getProductById(id);
-        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setProductName(updatedProduct.getProductName());
         existingProduct.setDescription(updatedProduct.getDescription());
         existingProduct.setPrice(updatedProduct.getPrice());
         existingProduct.setCollection(updatedProduct.getCollection());

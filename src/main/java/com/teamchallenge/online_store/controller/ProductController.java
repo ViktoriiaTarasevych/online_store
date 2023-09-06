@@ -53,7 +53,7 @@ public class ProductController {
     @Operation(summary = "Get product by id")
     public Product getProductById(@PathVariable Long id) {
         Product product = productService.getProductById(id);
-        product.getCollection().getName();
+        product.getCollection().getCollectionName();
         return product;
     }
 

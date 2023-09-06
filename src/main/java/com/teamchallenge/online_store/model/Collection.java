@@ -22,7 +22,8 @@ public class Collection {
 
     @JsonProperty
     @NotNull
-    private String name;
+    @Column(name = "name")
+    private String collectionName;
 
     @Lob
     @Column(columnDefinition = "BYTEA")
@@ -40,12 +41,12 @@ public class Collection {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCollectionName() {
+        return collectionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCollectionName(String name) {
+        this.collectionName = name;
     }
 
     public Set<Product> getProducts() {
@@ -68,8 +69,8 @@ public class Collection {
     public Collection() {
     }
 
-    public Collection(String name) {
-        this.name = name;
+    public Collection(String collectionName) {
+        this.collectionName = collectionName;
     }
 
     @Schema(accessMode = READ_ONLY)

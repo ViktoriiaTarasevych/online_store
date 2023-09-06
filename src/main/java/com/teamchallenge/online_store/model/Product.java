@@ -15,7 +15,8 @@ public class Product {
     @Schema(accessMode = READ_ONLY)
     private Long id;
 
-    private String name;
+    @Column(name = "name")
+    private String productName;
 
     private String description;
 
@@ -38,12 +39,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String name) {
+        this.productName = name;
     }
 
 
@@ -90,9 +91,9 @@ public class Product {
         this.popularProducts = popularProducts;
     }
 
-    public Product(Long id, String name, String description, BigDecimal price, Collection collection) {
+    public Product(Long id, String productName, String description, BigDecimal price, Collection collection) {
         this.id = id;
-        this.name = name;
+        this.productName = productName;
         this.description = description;
         this.price = price;
         this.collection = collection;
@@ -101,9 +102,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name) {
+    public Product(Long id, String productName) {
         this.id = id;
-        this.name = name;
+        this.productName = productName;
     }
 }
 
