@@ -7,6 +7,7 @@ import com.teamchallenge.online_store.servise.CollectionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,9 +32,9 @@ public class CollectionController {
 
     @PostMapping("/")
     @Operation(summary = "Add collection")
-    public ResponseEntity<String> addCategory(
+    public ResponseEntity<String> addCollection(
             @RequestParam("file") MultipartFile file,
-            @Valid @ModelAttribute Collection collection) {
+            @Valid @RequestBody Collection collection) {
         try {
             byte[] imageBytes = file.getBytes();
             collection.setImage(imageBytes);
@@ -56,12 +57,14 @@ public class CollectionController {
 
         byte[] imageBytes = collection.getImage();
 
+        ByteArrayResource imageResource = new ByteArrayResource(imageBytes);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG); // або інший MediaType в залежності від типу зображення
 
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(new CollectionResponse(collection, imageBytes));
+                .body(new CollectionResponse(collection, imageResource));
     }
 
     @PutMapping("/{id}")

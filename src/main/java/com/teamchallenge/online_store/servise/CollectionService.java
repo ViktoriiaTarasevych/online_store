@@ -27,7 +27,7 @@ public class CollectionService {
 
     public Collection getCollectionById(Long id) {
         return collectionRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Категорію не знайдено"));
+                .orElseThrow(() -> new NoSuchElementException("Колекцію не знайдено"));
     }
 
     public void updateCollection(Long id, Collection updatedCollection) {

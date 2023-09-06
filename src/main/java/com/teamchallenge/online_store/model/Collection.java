@@ -69,6 +69,13 @@ public class Collection {
     public Collection() {
     }
 
+    public Collection(Long id, String collectionName, byte[] image, Set<Product> products) {
+        this.id = id;
+        this.collectionName = collectionName;
+        this.image = image;
+        this.products = products;
+    }
+
     public Collection(String collectionName) {
         this.collectionName = collectionName;
     }
