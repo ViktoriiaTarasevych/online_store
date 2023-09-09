@@ -5,19 +5,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
+import lombok.Data;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Entity
+@Data
 public class Collection {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @JsonProperty
@@ -25,55 +25,21 @@ public class Collection {
     @Column(name = "name")
     private String collectionName;
 
-    @Lob
-    @Column(columnDefinition = "BYTEA")
-    private byte[] image;
-
     @JsonIgnore
     @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL)
     private Set<Product> products;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCollectionName() {
-        return collectionName;
-    }
-
-    public void setCollectionName(String name) {
-        this.collectionName = name;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products != null ? products : new HashSet<>();
-    }
-
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+    @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Image> images;
 
     public Collection() {
     }
 
-    public Collection(Long id, String collectionName, byte[] image, Set<Product> products) {
+    public Collection(Long id, String collectionName, Set<Product> products, Set<Image> images) {
         this.id = id;
         this.collectionName = collectionName;
-        this.image = image;
         this.products = products;
+        this.images = images;
     }
 
     public Collection(String collectionName) {
@@ -87,5 +53,10 @@ public class Collection {
             productIds.add(product.getId());
         }
         return productIds;
+    }
+
+    public void addImageToCollection(Image image) {
+        image.setCollection(this);
+        images.add(image);
     }
 }

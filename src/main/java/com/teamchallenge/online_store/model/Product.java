@@ -2,12 +2,14 @@ package com.teamchallenge.online_store.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-
+import lombok.Data;
 import java.math.BigDecimal;
+import java.util.Set;
 
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Entity
+@Data
 public class Product {
 
     @Id
@@ -31,65 +33,20 @@ public class Product {
     @JoinColumn(name = "collection_id")
     private Collection collection;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Image> images;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String name) {
-        this.productName = name;
-    }
-
-
-    public Collection getCollection() {
-        return collection;
-    }
-
-    public void setCollection(Collection collection) {
-        this.collection = collection;
-    }
-
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+    private Long previewImageId;
 
 
     public boolean isSeasonNovelties() {
         return seasonNovelties;
     }
 
-    public void setSeasonNovelties(boolean seasonNovelties) {
-        this.seasonNovelties = seasonNovelties;
-    }
-
-
     public boolean isPopularProducts() {
         return popularProducts;
     }
 
-    public void setPopularProducts(boolean popularProducts) {
-        this.popularProducts = popularProducts;
-    }
 
     public Product(Long id, String productName, String description, BigDecimal price, Collection collection) {
         this.id = id;
