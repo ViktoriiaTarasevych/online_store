@@ -59,4 +59,5 @@ public class Collection {
         image.setCollection(this);
         images.add(image);
     }
+
 }

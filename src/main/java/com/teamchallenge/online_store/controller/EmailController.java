@@ -46,7 +46,6 @@ public class EmailController {
         }
     }
 
-
     @PostMapping("/send3")
     public ResponseEntity<String> send3 (@RequestBody EmailRequest request) {
         try {

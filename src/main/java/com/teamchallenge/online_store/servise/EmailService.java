@@ -30,6 +30,7 @@ public class EmailService {
     }
 
 
+
     public void sendEmail(String toEmail, String text) throws MailjetException {
         try {
             MailjetRequest request = new MailjetRequest(Emailv31.resource)

@@ -86,4 +86,5 @@ public class CollectionController {
     public Set<Product> getProductsByCategoryId(@PathVariable Long collectionId) {
         return collectionService.getProductsByCollectionId(collectionId);
     }
+
 }

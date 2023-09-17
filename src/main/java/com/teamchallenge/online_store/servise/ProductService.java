@@ -61,6 +61,7 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+
     public List<Product> getProductsByCollection(Collection collection) {
         return productRepository.findByCollection(collection);
     }

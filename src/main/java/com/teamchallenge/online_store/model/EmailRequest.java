@@ -25,4 +25,5 @@ public class EmailRequest {
         this.toEmail = toEmail;
         this.text = text;
     }
+
 }

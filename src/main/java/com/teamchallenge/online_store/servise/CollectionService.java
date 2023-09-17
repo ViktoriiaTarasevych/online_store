@@ -66,3 +66,4 @@ public class CollectionService {
         collectionRepository.delete(collection);
     }
 }
+

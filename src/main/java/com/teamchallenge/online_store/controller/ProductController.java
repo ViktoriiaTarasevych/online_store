@@ -141,4 +141,5 @@ public class ProductController {
                     .body("Не вдалося видалити продукт: " + e.getMessage());
         }
     }
+
 }

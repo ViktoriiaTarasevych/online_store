@@ -48,4 +48,5 @@ public class Image {
         this.product = product;
         this.collection = collection;
     }
+
 }

@@ -28,6 +28,7 @@ public class OnlineStoreApplication {
 		};
 	}
 
+
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
 		return (args) -> {
