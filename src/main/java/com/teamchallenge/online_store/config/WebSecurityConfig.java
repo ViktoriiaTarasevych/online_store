@@ -16,6 +16,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity // чи потрібна дана анотація ?
 public class WebSecurityConfig {
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
