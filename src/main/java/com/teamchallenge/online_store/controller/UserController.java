@@ -82,5 +82,6 @@ public class UserController {
                     .body("Не вдалося видалити користувача: " + e.getMessage());
         }
     }
+
 }
 

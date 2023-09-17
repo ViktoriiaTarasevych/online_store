@@ -17,6 +17,7 @@ public class SendExample {
      * This call sends a message to one recipient.
      */
 
+
     public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
         MailjetClient client;
         MailjetRequest request;
