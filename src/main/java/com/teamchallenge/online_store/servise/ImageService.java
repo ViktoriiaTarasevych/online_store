@@ -26,10 +26,14 @@ public class ImageService {
         }
 
         try {
+            byte[] fileBytes = file.getBytes();
+
             Image image = new Image();
             image.setName(file.getOriginalFilename());
             image.setContentType(file.getContentType());
             image.setSize(file.getSize());
+
+            image.setBytes(fileBytes);
             return ResponseEntity.ok(image);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
