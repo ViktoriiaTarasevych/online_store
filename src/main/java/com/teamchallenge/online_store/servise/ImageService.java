@@ -2,9 +2,12 @@ package com.teamchallenge.online_store.servise;
 
 import com.teamchallenge.online_store.model.Image;
 import com.teamchallenge.online_store.repository.ImageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -16,8 +19,22 @@ public class ImageService {
         this.imageRepository = imageRepository;
     }
 
-    public Image saveImage(Image image) {
-        return imageRepository.save(image);
+    public ResponseEntity<Image> saveImage(MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        }
+
+        try {
+            Image image = new Image();
+            image.setName(file.getOriginalFilename());
+            image.setContentType(file.getContentType());
+            image.setSize(file.getSize());
+            return ResponseEntity.ok(image);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
     }
 
     public List<Image> getAllImages() {
