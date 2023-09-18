@@ -29,6 +29,19 @@ public class CollectionService {
 
         collectionRepository.save(collection);
     }
+    public List<Collection> getAllCollections() {
+        return collectionRepository.findAll();
+    }
+    public Collection saveCollection(Collection collection) {
+        return collectionRepository.save(collection);
+    }
+
+    public void addImageToCollection(Long collectionId, Image image) {
+        Collection collection = getCollectionById(collectionId);
+        image.setCollection(collection);
+        collection.getImages().add(image);
+        collectionRepository.save(collection);
+    }
 
     private Image toImageEntity(MultipartFile file)  throws IOException{
         Image image = new Image();

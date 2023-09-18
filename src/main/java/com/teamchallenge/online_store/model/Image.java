@@ -18,13 +18,13 @@ public class Image {
     @Column(name = "name")
     private String name;
     @Column(name = "original_file_name")
-    private String originalFileName;
+    private String originalFileName; // &
     @Column(name = "size")
     private Long size;
     @Column(name = "content_type")
     private String contentType;
     @Column(name = "is_preview_image")
-    private boolean isPreviewImage;
+    private boolean isPreviewImage; //&
     @Lob
   //  @Convert(converter = BlobConverter.class)
     @Column(columnDefinition = "BYTEA")

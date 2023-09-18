@@ -1,6 +1,7 @@
 package com.teamchallenge.online_store.controller;
 
 import com.teamchallenge.online_store.model.Collection;
+import com.teamchallenge.online_store.model.Image;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.servise.CollectionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -27,24 +29,22 @@ public class CollectionController {
     }
 
     @PostMapping("/")
-    @Operation(summary = "Add collection")
-    public ResponseEntity<String> addCollection(
-            @RequestParam("file") MultipartFile file,
-            @Valid @RequestBody Collection collection) {
-        try {
-            collectionService.addCollection(collection, file);
-            return ResponseEntity.ok("Колекцію успішно додано");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Не вдалося додати колекцію: " + e.getMessage());
-        }
+    public ResponseEntity<Collection> createCollection(@RequestBody Collection collection) {
+        Collection savedCollection = collectionService.saveCollection(collection);
+        return ResponseEntity.ok(savedCollection);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get collection by id")
-    public Collection getCategoryById(@PathVariable Long id) {
-        return collectionService.getCollectionById(id);
+    public ResponseEntity<Collection> getCollectionById(@PathVariable Long id) {
+        try {
+            Collection collection = collectionService.getCollectionById(id);
+            return ResponseEntity.ok(collection);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     @PutMapping("/{id}")
     @Operation(summary = "Update collection by id")
@@ -85,6 +85,25 @@ public class CollectionController {
     @Operation(summary = "Get all products in collection")
     public Set<Product> getProductsByCategoryId(@PathVariable Long collectionId) {
         return collectionService.getProductsByCollectionId(collectionId);
+    }
+
+
+    @PostMapping("/{collectionId}/images")
+    public ResponseEntity<Void> addImageToCollection(
+            @PathVariable Long collectionId,
+            @RequestParam("file") MultipartFile file) {
+        try {
+            Image image = new Image();
+            image.setName(file.getName());
+            image.setContentType(file.getContentType());
+            image.setSize(file.getSize());
+            image.setBytes(file.getBytes());
+
+            collectionService.addImageToCollection(collectionId, image);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }
