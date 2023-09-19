@@ -32,8 +32,9 @@ public class ImageService {
             image.setName(file.getOriginalFilename());
             image.setContentType(file.getContentType());
             image.setSize(file.getSize());
-
             image.setBytes(fileBytes);
+
+            imageRepository.save(image);
             return ResponseEntity.ok(image);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
