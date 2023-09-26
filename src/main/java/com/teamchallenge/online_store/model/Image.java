@@ -3,8 +3,6 @@ package com.teamchallenge.online_store.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Type;
-
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Entity
@@ -26,7 +24,6 @@ public class Image {
     @Column(name = "is_preview_image")
     private boolean isPreviewImage; //&
     @Lob
-  //  @Convert(converter = BlobConverter.class)
     @Column(columnDefinition = "BYTEA")
     private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
@@ -49,4 +46,6 @@ public class Image {
         this.collection = collection;
     }
 
+    public Image(byte[] bytes) {
+    }
 }

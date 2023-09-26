@@ -1,6 +1,7 @@
 package com.teamchallenge.online_store.controller;
 
 import com.teamchallenge.online_store.errors.StorageFileNotFoundException;
+import com.teamchallenge.online_store.model.Image;
 import com.teamchallenge.online_store.servise.StorageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ public class FileUploadController {
     @PostMapping("/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
-            storageService.store(file);
+            byte[] bytes = file.getBytes();
+            Image image = new Image(bytes);
             return ResponseEntity.ok("File uploaded successfully: " + file.getOriginalFilename());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
