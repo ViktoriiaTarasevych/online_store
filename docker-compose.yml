@@ -9,7 +9,7 @@ services:
     container_name: containerstore
 
     environment:
-      POSTGRES_DB: online_store_fpt1
+      POSTGRES_DB: dbnew_2783
       POSTGRES_PASSWORD: post
       POSTGRES_USER: postgres
 
