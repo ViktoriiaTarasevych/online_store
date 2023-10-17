@@ -32,5 +32,3 @@ build/
 ### VS Code ###
 .vscode/
 
-### Збереження конфігураційного файла з ключами API
-src/main/resources/application.properties

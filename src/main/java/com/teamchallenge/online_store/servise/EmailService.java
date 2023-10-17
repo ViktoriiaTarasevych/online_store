@@ -1,124 +1,56 @@
 package com.teamchallenge.online_store.servise;
 
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.resource.Emailv31;
-import com.teamchallenge.online_store.errors.MailjetSocketTimeoutException;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.teamchallenge.online_store.model.EmailRequest;
+import com.teamchallenge.online_store.repository.EmailRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.mailjet.client.ClientOptions;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+
 
 
 @Service
 public class EmailService {
 
-    private final MailjetClient client;
-
-
-    @Value("${mailjet.api.key}")
+    @Value("${mailgun.api.key}")
     private String apiKey;
 
-    @Value("${mailjet.secret.key}")
-    private String secretKey;
+    @Value("${mailgun.domain}")
+    private String domain;
 
-    public EmailService() {
-        client = new MailjetClient(apiKey, secretKey);
+    private final EmailRepository emailRepository;
+
+    public EmailService(EmailRepository emailRepository) {
+        this.emailRepository = emailRepository;
     }
 
-
-
-    public void sendEmail(String toEmail, String text) throws MailjetException {
+    public void sendEmail(EmailRequest emailRequest) {
         try {
-            MailjetRequest request = new MailjetRequest(Emailv31.resource)
-                    .property(Emailv31.MESSAGES, new JSONArray()
-                            .put(new JSONObject()
-                                    .put(Emailv31.Message.FROM, new JSONObject()
-                                            .put("Email", "vikka1836@gmail.com")
-                                            .put("Name", "PIDPAL"))
-                                    .put(Emailv31.Message.TO, new JSONArray()
-                                            .put(new JSONObject()
-                                                    .put("Email", toEmail)
-                                                    .put("Text", text)))
-                                    .put(Emailv31.Message.TEXTPART, "Перевірка")));
-
-            MailjetResponse response = client.post(request);
-            if (response.getStatus() != 200) {
-                System.err.println("Error sending email. Mailjet response: " + response.getData());
-            }
-        } catch (MailjetException e) {
-            System.err.println("Mailjet error: " + e.getMessage());
+            JsonNode jsonNode = sendSimpleMessage(emailRequest);
+            System.out.println(jsonNode.toString());
+        } catch (UnirestException e) {
             e.printStackTrace();
         }
+
+        emailRepository.save(emailRequest);
     }
 
-    public void send2(String toEmail, String text) throws MailjetException, MailjetSocketTimeoutException {
-
-        MailjetRequest request;
-        MailjetResponse response;
-        request = new MailjetRequest(Emailv31.resource)
-                .property(Emailv31.MESSAGES, new JSONArray()
-                        .put(new JSONObject()
-                                .put(Emailv31.Message.FROM, new JSONObject()
-                                        .put("Email", "vikka1836@gmail.com")
-                                        .put("Name", "Mailjet Pilot"))
-                                .put(Emailv31.Message.TO, new JSONArray()
-                                        .put(new JSONObject()
-                                                .put("Email", toEmail)
-                                                .put("Text", text)))
-                                .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
-                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
-                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
-        response = client.post(request);
-        System.out.println(response.getStatus());
-        System.out.println(response.getData());
-    }
-
-
-    public void send3(String toEmail, String text) throws MailjetException, MailjetSocketTimeoutException {
-        MailjetRequest request = new MailjetRequest(Emailv31.resource)
-                .property(Emailv31.MESSAGES, new JSONArray()
-                        .put(new JSONObject()
-                                .put(Emailv31.Message.FROM, new JSONObject()
-                                        .put("Email", "vikka1836@gmail.com")
-                                        .put("Name", "Mailjet Pilot"))
-                                .put(Emailv31.Message.TO, new JSONArray()
-                                        .put(new JSONObject()
-                                                .put("Email", toEmail)
-                                                .put("Text", text)))
-                                .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
-                                .put(Emailv31.Message.TEXTPART, "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!")
-                                .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
-        MailjetResponse response = client.post(request);
-
-        if (response.getStatus() != 200) {
-            System.err.println("Error sending email. Mailjet response: " + response.getData());
-        }
+    private JsonNode sendSimpleMessage(EmailRequest emailRequest) throws UnirestException {
+        HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/" + domain + "/messages")
+                .basicAuth("api", apiKey)
+                .queryString("from", emailRequest.getToEmail())
+                .queryString("to", "viktoriia.t@ukr.net")
+                .queryString("subject", emailRequest.getSubject())
+                .queryString("text", emailRequest.getText())
+                .asJson();
+        return request.getBody();
     }
 }
 
 
-//    public List<MailjetMessage> getMessages() throws MailjetException{
-//        MailjetRequest request = new MailjetRequest(Message.resource, null, new ContactFilter().limit(10));
-//        MailjetResponse response = client.get(request);
-//
-//        if (response.getStatus() == 200) {
-//            JSONArray messagesArray = response.getData();
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            return objectMapper.readValue(messagesArray.toString(), new TypeReference<List<MailjetMessage>>() {});
-//        } else {
-//            throw new RuntimeException("Failed to retrieve messages from Mailjet.");
-//        }
-//    }
-
-
-
-//    public void createNewsletter(String subject, String content) {
-//        // Логіка для створення розсилки через Mailjet API
-//    }
 
 
 
