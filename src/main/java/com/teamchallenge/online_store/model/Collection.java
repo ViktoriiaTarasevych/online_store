@@ -32,14 +32,19 @@ public class Collection {
     @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Image> images;
 
+
+    @Column(columnDefinition = "bytea", name = "collectionImage")
+    private byte[] collectionImage;
+
     public Collection() {
     }
 
-    public Collection(Long id, String collectionName, Set<Product> products, Set<Image> images) {
+    public Collection(Long id, String collectionName, Set<Product> products, Set<Image> images, byte[] collectionImage) {
         this.id = id;
         this.collectionName = collectionName;
         this.products = products;
         this.images = images;
+        this.collectionImage = collectionImage;
     }
 
     public Collection(String collectionName) {

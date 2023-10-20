@@ -88,22 +88,35 @@ public class CollectionController {
     }
 
 
-    @PostMapping("/{collectionId}/images")
-    public ResponseEntity<Void> addImageToCollection(
-            @PathVariable Long collectionId,
-            @RequestParam("file") MultipartFile file) {
-        try {
-            Image image = new Image();
-            image.setName(file.getName());
-            image.setContentType(file.getContentType());
-            image.setSize(file.getSize());
-            image.setBytes(file.getBytes());
+//    @PostMapping("/{collectionId}/images")
+//    public ResponseEntity<Void> addImageToCollection(
+//            @PathVariable Long collectionId,
+//            @RequestParam("file") MultipartFile file) {
+//        try {
+//            Image image = new Image();
+//            image.setName(file.getName());
+//            image.setContentType(file.getContentType());
+//            image.setSize(file.getSize());
+//            image.setBytes(file.getBytes());
+//
+//            collectionService.addImageToCollection(collectionId, image);
+//            return ResponseEntity.ok().build();
+//        } catch (IOException e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
 
-            collectionService.addImageToCollection(collectionId, image);
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    @PostMapping("/{collectionId}/images")
+    public ResponseEntity<String> uploadProfileImage(@PathVariable Long collectionId,
+                                                     @RequestParam("file") MultipartFile file) {
+        try {
+            collectionService.uploadCollectionImage(collectionId, file);
+            return ResponseEntity.ok("Profile image uploaded successfully");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to upload profile image: " + e.getMessage());
         }
     }
-
 }

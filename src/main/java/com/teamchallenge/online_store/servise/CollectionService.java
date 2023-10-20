@@ -78,5 +78,22 @@ public class CollectionService {
         Collection collection = getCollectionById(id);
         collectionRepository.delete(collection);
     }
+
+
+
+    public void uploadCollectionImage(Long collectionId, MultipartFile file) {
+        Collection collection = collectionRepository.findById(collectionId)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                byte[] imageBytes = file.getBytes();
+                collection.setCollectionImage(imageBytes);
+                collectionRepository.save(collection);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to save profile image: " + e.getMessage());
+            }
+        }
+    }
 }
 
