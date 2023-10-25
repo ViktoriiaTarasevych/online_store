@@ -1,7 +1,6 @@
 package com.teamchallenge.online_store.servise;
 
 import com.teamchallenge.online_store.model.Collection;
-import com.teamchallenge.online_store.model.Image;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.repository.CollectionRepository;
 import org.springframework.stereotype.Service;
@@ -19,16 +18,6 @@ public class CollectionService {
         this.collectionRepository = collectionRepository;
     }
 
-    public void addCollection(Collection collection, MultipartFile file) throws IOException{
-        Image image;
-
-        if (file.getSize() != 0) {
-            image = toImageEntity(file);
-            collection.addImageToCollection(image);
-        }
-
-        collectionRepository.save(collection);
-    }
     public List<Collection> getAllCollections() {
         return collectionRepository.findAll();
     }
@@ -36,22 +25,6 @@ public class CollectionService {
         return collectionRepository.save(collection);
     }
 
-    public void addImageToCollection(Long collectionId, Image image) {
-        Collection collection = getCollectionById(collectionId);
-        image.setCollection(collection);
-        collection.getImages().add(image);
-        collectionRepository.save(collection);
-    }
-
-    private Image toImageEntity(MultipartFile file)  throws IOException{
-        Image image = new Image();
-        image.setName(file.getName());
-        image.setOriginalFileName(file.getOriginalFilename());
-        image.setContentType(file.getContentType());
-        image.setSize(file.getSize());
-        image.setBytes(file.getBytes());
-        return image;
-    }
 
     public List<Collection> getAllCollection() {
         return collectionRepository.findAll();

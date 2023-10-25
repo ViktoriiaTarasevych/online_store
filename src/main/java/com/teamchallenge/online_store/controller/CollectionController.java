@@ -1,18 +1,16 @@
 package com.teamchallenge.online_store.controller;
 
 import com.teamchallenge.online_store.model.Collection;
-import com.teamchallenge.online_store.model.Image;
 import com.teamchallenge.online_store.model.Product;
 import com.teamchallenge.online_store.servise.CollectionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -87,24 +85,6 @@ public class CollectionController {
         return collectionService.getProductsByCollectionId(collectionId);
     }
 
-
-//    @PostMapping("/{collectionId}/images")
-//    public ResponseEntity<Void> addImageToCollection(
-//            @PathVariable Long collectionId,
-//            @RequestParam("file") MultipartFile file) {
-//        try {
-//            Image image = new Image();
-//            image.setName(file.getName());
-//            image.setContentType(file.getContentType());
-//            image.setSize(file.getSize());
-//            image.setBytes(file.getBytes());
-//
-//            collectionService.addImageToCollection(collectionId, image);
-//            return ResponseEntity.ok().build();
-//        } catch (IOException e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
 
     @PostMapping("/{collectionId}/images")
     public ResponseEntity<String> uploadProfileImage(@PathVariable Long collectionId,

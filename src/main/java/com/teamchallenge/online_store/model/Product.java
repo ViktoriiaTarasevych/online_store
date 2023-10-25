@@ -33,11 +33,6 @@ public class Product {
     @JoinColumn(name = "collection_id")
     private Collection collection;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Image> images;
-
-    private Long previewImageId;
-
 
     public boolean isSeasonNovelties() {
         return seasonNovelties;
